@@ -11,10 +11,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Image from "./img/mainlogo.png"
 // import { UPDATE_PROFILE_RESET } from "../constants/userConstants/UPDATE_PROFILE_RESET ";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "../actions/userAction";
+import { updatePassword } from "../actions/userAction";
 import { loadUser, clearErrors } from "../actions/userAction";
 import { useNavigate } from "react-router-dom";
-import {UPDATE_RESET} from "../constants/userConstants"
+import {UPDATE_PASSWORD_RESET} from "../constants/userConstants"
 const useStyles = makeStyles((theme) => ({
 
     button: {
@@ -23,46 +23,34 @@ const useStyles = makeStyles((theme) => ({
     },
    
 }));
-export default function UpdateProfile() {
+export default function UpdatePassword() {
 
     const { user } = useSelector((state) => state.user);
     const { error, isUpdated, loading } = useSelector((state) => state.profile);
   
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+     const [confirmPassword, setConfirmPassword] = useState("");
+
     const history= useNavigate();
   const dispatch= useDispatch();
   const [open, setOpen] = React.useState(false); 
-  const [avatar, setAvatar] = useState("/Profile.png");
-  const [avatarPreview, setAvatarPreview] = useState("");
 
-  const UpdateSubmit = (e) => {
+
+  const PasswordSubmit = (e) => {
     e.preventDefault();
 
     const myForm = new FormData();
 
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("avatar", avatar);
+    myForm.set("oldpassword", oldPassword);
+    myForm.set("newpassword", newPassword);
+    myForm.set("confirmpassword", confirmPassword);
     console.log("data",myForm)
-    dispatch(updateProfile(myForm));
+    dispatch(updatePassword(myForm));
    
   };  
 
-  const imageChange = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
-    } 
-  };
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -71,79 +59,75 @@ export default function UpdateProfile() {
     setOpen(false);
   };
   useEffect(() => {
-    if (user) {
-      setName(user.name);
-      setEmail(user.email);
-      setAvatarPreview(user.avatar.url);
-    }
-
+   
     if (error) {
-      alert(error);
+      alert.error(error);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("Profile Updated Successfully");
-      dispatch(loadUser());
+      alert("Password Updated Successfully");
 
       history("/account");
 
      dispatch({
-       type: UPDATE_RESET 
+       type: UPDATE_PASSWORD_RESET 
      })
     }
-  }, [dispatch, error,  history, user, isUpdated]);
+  }, [dispatch, error,  history,  isUpdated]);
 
 
   const classes = useStyles();
   return (
     <div>
         <strong variant="outlined" color="info" onClick={handleClickOpen}>
- Update Profile
+ Update Password
       </strong>
        <Dialog open={open} onClose={handleClose}>
         
         <DialogContent>
-        <DialogTitle color="text">Update<img style={{height:"200px",marginBottom:"-110px",marginLeft:"228px",marginTop:"-100px", width:"auto"}} src={Image} alt='.'></img></DialogTitle>
+        <DialogTitle color="text">Update Password<img style={{height:"200px",marginBottom:"-110px",marginLeft:"228px",marginTop:"-100px", width:"auto"}} src={Image} alt='.'></img></DialogTitle>
          
           <DialogContentText >
-            If you want to update your profile then please fill all
+            If you are first time user of our website then please fill all
             details.
           </DialogContentText>
       
           <form encType="multipart/form-data"
-                onSubmit={UpdateSubmit}>
+                onSubmit={PasswordSubmit}>
              <TextField
             autoFocus
             margin="dense"
-            label="UserName"
-            value={name}
-            type="text"
+            label="Old Password"
+            value={oldPassword}
+            type="password"
             fullWidth
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setOldPassword(e.target.value)}
             variant="standard"
 
           />
-          <TextField
+           <TextField
             autoFocus
             margin="dense"
-            label="Email Address"
-            type="email"
-            value={email}
+            label="New Password"
+            value={newPassword}
+            type="password"
             fullWidth
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setNewPassword(e.target.value)}
             variant="standard"
-          />{" "}
-         
-          <div id="UpdateImage">
-                  <img src={avatarPreview}  style={{height:"100px", width:"auto"}}alt="Avatar Preview" />
-                  <input
-                    type="file"
-                    name="avatar"
-                    accept="image/*"
-                    onChange={imageChange}
-                  />
-                </div>
+
+          />
+            <TextField
+            autoFocus
+            margin="dense"
+            label="Confirm Password"
+            value={confirmPassword}
+            type="password"
+            fullWidth
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            variant="standard"
+
+          />
                 </form>
          
           
@@ -151,7 +135,7 @@ export default function UpdateProfile() {
           <Button variant="success" onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={UpdateSubmit}>Update</Button>
+          <Button onClick={PasswordSubmit}>Update</Button>
         </DialogActions>
         </DialogContent>
       

@@ -8,9 +8,12 @@ import { Container, Grid, TextField } from "@mui/material";
 import Loader from "./layout/Loader";
 import Image from "../component/img/back1.jpg";
 import { Pagination } from "@mui/material";
-import { Slider, Typography } from "@material-ui/core";
+import { Button, Slider, Typography } from "@material-ui/core";
 import { Box, typography } from "@mui/system";
 import Shortcut from "./layout/Shortcut";
+import { Link } from "react-router-dom";
+import CartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home';
 const categories = [
   "Anniversary",
   "Birthday",
@@ -53,19 +56,35 @@ const AllProducts = () => {
     <div className={classes.heroContent}>
             {isAuthenticated && <Shortcut user={user}/>}  
 
-      <div >  
+            <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         
-        <TextField
+          <Grid item xs={2} sm={4} md={4}>
+          <Button style={{marginTop:"15px"}}><Link style={{textDecoration:"none", color:"black"}}to="/"><HomeIcon/></Link></Button>
+          </Grid>
+          <Grid item xs={2} sm={4} md={4}>
+          <TextField
           label="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           autoFocus
           style={{
-            margin: "10px 150px 30px",
-            width: "1000px",
+              margin: "10px -300px 30px",
+              width: "1000px",
           }}
         />
+           </Grid>
+           <Grid item xs={2} sm={4} md={4}>
+           <Button style={{marginLeft:"350px", marginTop:"15px"}}><Link style={{textDecoration:"none", color:"black"}}to="/cart"><CartIcon/></Link></Button>
+           </Grid>
+      </Grid>
+    </Box>
+
+      <div >  
+        
+       
         {/* <Button onClick={handleSearch}>Search</Button> */}
+    
       </div>
       <Box className={classes.box}>
       <Typography>Price</Typography>

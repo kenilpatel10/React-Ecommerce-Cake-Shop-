@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST,LOGOUT_FAIL,LOGOUT_SUCCESS, UPDATE_RESET,UPDATE_REQUEST,UPDATE_FAIL,UPDATE_SUCCESS,LOGIN_FAIL,LOAD_REQUEST, LOGIN_SUCCESS ,CLEAR_ERRORS, REGISTER_SUCCESS,REGISTER_REQUEST,REGISTER_FAIL, LOAD_SUCCESS, LOAD_FAIL} from "../constants/userConstants"
+import { LOGIN_REQUEST,LOGOUT_FAIL,LOGOUT_SUCCESS,UPDATE_PASSWORD_FAIL,UPDATE_PASSWORD_REQUEST,UPDATE_PASSWORD_RESET,UPDATE_PASSWORD_SUCCESS, UPDATE_RESET,UPDATE_REQUEST,UPDATE_FAIL,UPDATE_SUCCESS,LOGIN_FAIL,LOAD_REQUEST, LOGIN_SUCCESS ,CLEAR_ERRORS, REGISTER_SUCCESS,REGISTER_REQUEST,REGISTER_FAIL, LOAD_SUCCESS, LOAD_FAIL} from "../constants/userConstants"
 
 export const userReducer = ( state = { user: {} }, action) =>{
     switch (action.type) {
@@ -64,12 +64,13 @@ export const userReducer = ( state = { user: {} }, action) =>{
 export const profileReducer = ( state = { user: {} }, action) =>{
     switch (action.type) {
         case UPDATE_REQUEST:
+            case UPDATE_PASSWORD_REQUEST:
             return{
                 ...state,
                 loading:true,
             };
             case UPDATE_SUCCESS:
-                
+                case UPDATE_PASSWORD_SUCCESS:
                 return{
                     ...state,
                     loading:false,
@@ -77,6 +78,7 @@ export const profileReducer = ( state = { user: {} }, action) =>{
                 };  
                 
                 case UPDATE_FAIL:
+                    case UPDATE_PASSWORD_FAIL:
                        
                 return{
                     ...state,
@@ -84,16 +86,13 @@ export const profileReducer = ( state = { user: {} }, action) =>{
                     error: action.payload,
                 };
                 case UPDATE_RESET:
+                    case UPDATE_PASSWORD_RESET:
                        return{
                            ...state,
                             isupdated: false,
                        }
-                    return{
-                        ...state,
-                        loading:false,
-                        error: action.payload,
-                    };
 
+                  
                 case CLEAR_ERRORS:
                 
                     return{

@@ -127,7 +127,7 @@ export default function FormDialog() {
             variant="standard"
           /> */}  
           <div id="registerImage">
-                  <img src={avatarPreview}  style={{height:"200px", width:"auto"}}alt="Avatar Preview" />
+                  <img src={avatarPreview}  style={{height:"100px", width:"auto"}}alt="Avatar Preview" />
                   <input
                     type="file"
                     name="avatar"

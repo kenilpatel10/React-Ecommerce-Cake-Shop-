@@ -1,32 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
-
 import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getProductDetails } from "../actions/productAction";
+import { getProductDetails } from "../actions/productAction";
 import { useParams } from "react-router-dom";
 import Header from "./layout/Header";
 import { makeStyles } from "@material-ui/core/styles";
 import Image from "../component/img/back1.jpg";
-import { Grid ,Button, Input, Card} from "@mui/material";
+import { Grid ,Button, Input} from "@mui/material";
 import Shortcut from "./layout/Shortcut";
-import Box from '@mui/material/Box';
-// import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { borderRadius } from "@mui/system";
 import Loader from "./layout/Loader";
+import { addItemsToCart } from "../actions/cartAction"; 
 
 const ProductDetails = () => {
   const { product,loading } = useSelector((state) => state.productDetails);
   const product_Id = useParams();
-
-
   const {isAuthenticated, user} = useSelector(state=> state.user)
+ const [quantity, setQuantity] = useState(1)
 
- 
+const increaseQuantity=()=>{
+if(quantity <= 5){
+  const qty = quantity + 1;
+  setQuantity(qty);
+}
+}
+
+const decreaseQuantity=()=>{
+if(1 >= quantity ) return;
+  const qty = quantity - 1;
+   setQuantity(qty);
+ }
+
+ const handleAddToCart=()=>{
+  dispatch(addItemsToCart(product_Id.id, quantity))
+  alert("added to cart")
+ }  
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductDetails(product_Id.id));
@@ -35,23 +44,17 @@ const ProductDetails = () => {
   const classes = useStyles();
   return (
     <Fragment >
-      {loading ? (<Loader/> ):( <div className={classes.heroContent}>
-
+      {loading ? (<Loader/>):( <div className={classes.heroContent}>
       <Header />  
-       
-    
-
        <div className={classes.grid}>
-      
           <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >
-  <Grid item xs={6} >
-  <div >
+  <Grid item xs={6}>
+  <div>
           <Carousel className={classes.grid1}>
-            
             {product.images &&
               product.images.map((item, i) => (
                 <img
-                className={classes.img}
+                  className={classes.img}
                   key={i}
                   src={item.url}
                   alt={`${i} Slide`}
@@ -61,7 +64,6 @@ const ProductDetails = () => {
         </div>
   </Grid>
   <Grid item xs={6} >
-  
           <div > 
           {isAuthenticated && <Shortcut user={user}/>}  
             <h2>{product.name}</h2>
@@ -71,11 +73,11 @@ const ProductDetails = () => {
             <h1>{`₹${product.price}`}</h1>
             <div className="detailsBlock-3-1">
               <div className="detailsBlock-3-1-1">
-                <Button>-</Button>
-                <Input  readOnly value="1" label="kg" type="number"/>
-                <Button>+</Button>
+                    <Button onClick={decreaseQuantity}>- kg</Button>
+                    <Input  style={{width:"30px", textAlign:"center"}} readOnly value={quantity} type="number"/>
+                    <Button onClick={increaseQuantity} >+ kg</Button>
               </div>
-              <Button >
+              <Button variant="contained" color="warning" onClick={handleAddToCart} >
                 Add to Cart
               </Button>
             </div>

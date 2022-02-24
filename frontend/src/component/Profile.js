@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Loader from "./layout/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import UpdateProfile from "./UpdateProfile";
+import UpdatePassword from "./UpdatePassword";
 
 const Profile = () => {
   const history = useNavigate();
@@ -39,9 +40,9 @@ const Profile = () => {
                 rowSpacing={1}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
-                <Grid item xs={6}>
+                <Grid item xs={6} style={{textAlign:"center", marginTop:"-20px" }} >
                   <div>
-                    <Typography>My Profile</Typography>
+                    <Typography className={classes.typography}><h3>My Profile</h3></Typography>
                     <img
                       className={classes.img}
                       key={user.name}
@@ -51,7 +52,8 @@ const Profile = () => {
                   </div>
                   <div>
                     {" "}
-                    <Button><UpdateProfile/></Button>
+                  
+                    <Button style={{color:"white" , margin:"10px"}} variant="contained" color="warning" ><UpdateProfile/></Button>
                   </div>
                 </Grid>
                 <Grid item xs={6}>
@@ -75,12 +77,13 @@ const Profile = () => {
                       <p>{String(user.createdAt).substr(0,10)}</p> */}
                       
                     </div>
-                    <div className="detailsBlock-3-1">
-<Link to="/orders">My Orders</Link>
+                    <div className={classes.button}>
+<Button  variant="contained" color="info" ><Link style={{textDecoration:"none", color:"white"}} to="/orders">My Orders</Link></Button>
                           
 </div>
-                    <div className="detailsBlock-4">
-                    <Link to="/password/update">Change Password</Link>
+                    <div  className={classes.button}>
+                        <Button  variant="contained" color="warning">  <UpdatePassword/></Button>
+                 
                     </div>
                     <div />
                   </div>
@@ -114,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "10px",
     borderRadius: "50%",
     height: "250px",
-    width: "auto",
+    width: "250px",
     backgroundPosition: "center",
     backgroundRepeat: "norepeat",
     backgroundSize: "cover",
@@ -125,10 +128,10 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     fontFamily: '"Apple Color Emoji"',
-    fontSize: "20px",
+    fontSize: "30px",
   },
   grid: {
-    textAlign: "center",
+    // textAlign: "center",
     padding: "50px",
     backgroundColor: "white",
     height: "450px",
@@ -140,6 +143,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow:
       "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
   },
+  
   grid1: {
     backgroundColor: "white",
     height: "350px",
@@ -149,5 +153,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "30px",
     boxShadow:
       "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
-  },
+  },button:{
+      color:"white",
+      margin:"20px 0px",
+      
+  }
 }));

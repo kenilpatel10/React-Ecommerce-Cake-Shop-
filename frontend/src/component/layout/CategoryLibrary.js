@@ -91,7 +91,7 @@ const images = [
 
 export default function CategoryLibrary() {
   return (
-    <Container component="section" sx={{ mt: 8, mb: 4 }}>
+    <Container id="scroll" component="section" sx={{ mt: 8, mb: 4 }}>
       <Typography variant="h4" marked="center" align="center" component="h2">
         For all tastes and all desires
       </Typography>

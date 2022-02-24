@@ -151,7 +151,7 @@ const history = useNavigate();
       <Link to="/products" style={{textDecoration:"none", marginRight:"80px",marginLeft:"28px"}}>    <Search/></Link>
 
         
-         <CartIcon style={{ color: "black" }}/><Link to="" className={classes.link}></Link>
+         <Link to="/cart" className={classes.link}><CartIcon style={{ color: "black" }}/></Link>
      
    <div>
     <Stack direction="row" spacing={2}  onClick={handleClick}>

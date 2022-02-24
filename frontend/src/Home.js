@@ -152,7 +152,7 @@ const Home = ({ product }) => {
                   <div className={classes.heroButtons}>
                     <Grid container spacing={2} justifyContent="center">
                       <Grid item>
-                        <Button variant="contained" color="primary">
+                        <Button href="#scroll"  variant="contained" color="primary">
                           Explore More
                         </Button>
                       </Grid>
@@ -163,7 +163,7 @@ const Home = ({ product }) => {
             </main>
           </React.Fragment>
           <Services />
-          <CategoryLibrary />
+          <CategoryLibrary/>
           <>
             <Container className={classes.cardGrid} maxWidth="md">
               <Grid container spacing={4}>

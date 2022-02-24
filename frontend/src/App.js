@@ -13,6 +13,8 @@ import UpdateProfile from './component/UpdateProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import Shortcut from "./component/layout/Shortcut"
 import Profile from './component/Profile';
+import UpdatePassword from './component/UpdatePassword';
+import Cart from './component/Cart';
 function App() {
   // const dispatch = useDispatch();
   useEffect(() => {
@@ -29,7 +31,8 @@ function App() {
       <Route path="/products" element={<AllProducts/>}  />
       <Route path="/account" element={<Profile/>}  />
       <Route path="/me/update" element={<UpdateProfile/>}  />
-
+      <Route path="/password/update" element={<UpdatePassword/>}  />
+      <Route path="/cart" element={<Cart/>}  />
 
    
       
