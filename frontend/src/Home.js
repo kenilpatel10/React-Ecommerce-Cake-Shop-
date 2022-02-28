@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 
 import Footer from "./component/layout/Footer";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "../src/component/img/back1.jpg";
 import { Container } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import Cards from "./component/layout/Cards";
@@ -15,12 +14,17 @@ import Loader from "./component/layout/Loader.js";
 import Button from "@material-ui/core/Button";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
-
+import Fade from '@mui/material/Fade';
 import Typography from "@material-ui/core/Typography";
 
 import Image1 from "../src/component/img/cake.jpg";
 
 import Logo from "../src/component/img/cakelogo3.png";
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import Paper from '@mui/material/Paper';
+import Grow from '@mui/material/Grow';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import CommonHeader from "./component/layout/Header";
 import Shortcut from "./component/layout/Shortcut";
@@ -76,14 +80,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     opacity: "0.9",
   },
-  main: {
-    backgroundImage: `url(${Image})`,
-    height: "100%",
-    backgroundPosition: "center",
-    backgroundRepeat: "norepeat",
-    backgroundSize: "cover",
-    
+  "@global": {
+    "@keyframes pulsate": {
+      from: {
+        opacity: 1,
+        transform: "scale(1)",
+      },
+      to: {
+        opacity: 0,
+        transform: "scale(2)",
+      },
+    }
   },
+  background: theme.palette.primary.main,
+  borderRadius: "100%",
+  animation: "$plusate 1s infinite ease",
+  position: "absolute",
+  zIndex: -2,
 }));
 
 const Home = ({ product }) => {
@@ -108,14 +121,13 @@ const Home = ({ product }) => {
     }, 5000);
     return () => clearTimeout(timer);
   }, [dispatch]);
-  console.log("loading...", loading);
   const classes = useStyles();
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <main className={classes.main}>
+        <main>
           <React.Fragment>
             <CssBaseline />
 
@@ -180,3 +192,4 @@ const Home = ({ product }) => {
 };
 
 export default Home;
+

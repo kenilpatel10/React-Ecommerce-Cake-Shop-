@@ -14,6 +14,7 @@ import Shortcut from "./layout/Shortcut";
 import { Link } from "react-router-dom";
 import CartIcon from '@mui/icons-material/ShoppingCart';
 import HomeIcon from '@mui/icons-material/Home';
+import { Badge } from "@mui/material";
 const categories = [
   "Anniversary",
   "Birthday",
@@ -25,7 +26,7 @@ const categories = [
 
 const AllProducts = () => {
 
-
+const {cartItems} = useSelector(state=> state.cart)
   const {isAuthenticated, user} = useSelector(state=> state.user)
 
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const AllProducts = () => {
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         
           <Grid item xs={2} sm={4} md={4}>
-          <Button style={{marginTop:"15px"}}><Link style={{textDecoration:"none", color:"black"}}to="/"><HomeIcon/></Link></Button>
+          <Button style={{marginTop:"15px", borderRadius:"50%"}}><Link style={{textDecoration:"none", color:"black"}}to="/"><HomeIcon/></Link></Button>
           </Grid>
           <Grid item xs={2} sm={4} md={4}>
           <TextField
@@ -75,7 +76,12 @@ const AllProducts = () => {
         />
            </Grid>
            <Grid item xs={2} sm={4} md={4}>
-           <Button style={{marginLeft:"350px", marginTop:"15px"}}><Link style={{textDecoration:"none", color:"black"}}to="/cart"><CartIcon/></Link></Button>
+           <Button style={{marginLeft:"350px", marginTop:"15px", borderRadius:"50%"}}>      <Badge anchorOrigin={{
+    vertical: 'top',
+    horizontal: 'left'}} badgeContent={cartItems.length}  color="primary">
+      <Link to="/cart" className={classes.link}><CartIcon style={{ color: "black" }}/></Link>
+    </Badge>
+     </Button>
            </Grid>
       </Grid>
     </Box>

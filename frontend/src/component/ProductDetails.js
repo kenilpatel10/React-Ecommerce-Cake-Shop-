@@ -6,7 +6,7 @@ import { getProductDetails } from "../actions/productAction";
 import { useParams } from "react-router-dom";
 import Header from "./layout/Header";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "../component/img/back1.jpg";
+
 import { Grid ,Button, Input} from "@mui/material";
 import Shortcut from "./layout/Shortcut";
 import Loader from "./layout/Loader";
@@ -113,15 +113,7 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
 
-  heroContent: {
-    minHeight: "100vh",
-    backgroundImage: `url(${Image})`,
-    height: "100%",
-    backgroundPosition: "center",
-    backgroundRepeat: "norepeat",
-    backgroundSize: "cover",
-    
-  },
+  
 img: {
    
   height:"350px", width:"auto",

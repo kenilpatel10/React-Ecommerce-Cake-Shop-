@@ -3,8 +3,7 @@ import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "./layout/Header";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "../component/img/back1.jpg";
-import { Grid, Button, Input, Card } from "@mui/material";
+import { Grid, Button, Input, Card, Container } from "@mui/material";
 import Shortcut from "./layout/Shortcut";
 import Typography from "@mui/material/Typography";
 import Loader from "./layout/Loader";
@@ -103,15 +102,6 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
     color: "black",
-  },
-
-  heroContent: {
-    minHeight: "100vh",
-    backgroundImage: `url(${Image})`,
-    height: "100%",
-    backgroundPosition: "center",
-    backgroundRepeat: "norepeat",
-    backgroundSize: "cover",
   },
   img: {
     marginLeft: "10px",

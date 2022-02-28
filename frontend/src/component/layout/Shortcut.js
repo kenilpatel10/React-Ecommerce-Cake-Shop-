@@ -9,16 +9,23 @@ import CakeIcon from '@mui/icons-material/CakeTwoTone';
 import { useNavigate } from 'react-router-dom';
 import ProfileIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LogoutIcon from '@mui/icons-material/LogoutTwoTone';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userAction';
 import { Backdrop } from '@material-ui/core';
+import CartIcon from '@mui/icons-material/ShoppingCart';
+
 export default function Shortcut({user}) {
 const history = useNavigate();
 const dispatch= useDispatch();
+
+const {cartItems} = useSelector((state)=> state.cart)
     const actions = [
         { icon: <ProfileIcon />, name: 'Profile' ,func: account },
+        { icon: <CartIcon/>, name: `Cart(${cartItems.length})` ,func: cart },
         { icon: <CakeIcon />, name: 'Orders'  , func: orders},
         { icon: <LogoutIcon />, name: 'LogOut' , func: logOutUser},
+        
+
       ];
 
 if(user.role === "admin"){
@@ -37,7 +44,10 @@ if(user.role === "admin"){
  }function account() { 
      history('/account');
      
- }function logOutUser() {
+ }function cart() { 
+  history('/cart');
+  
+}function logOutUser() {
       dispatch(logout());
       alert.success("logout successfully")
      history('/');

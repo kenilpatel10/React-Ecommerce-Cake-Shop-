@@ -35,69 +35,15 @@ import Profile from "../Profile";
 import { logout } from "../../actions/userAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-const useStyles = makeStyles((theme) => ({
-    icon: {
-      marginRight: theme.spacing(2),
-      color:"black"
-    },
-  
-    heroContent: {
-      minHeight: "100vh",
-      backgroundImage: `url(${Image})`,
-      height: "100%",
-      backgroundPosition: "center",
-      backgroundRepeat: "norepeat",
-      backgroundSize: "cover",
-      color:"white",
-      clipPath: "circle(75.6% at 34% 0)",
-    },
-  
-    heroButtons: {
-      marginTop: theme.spacing(4),
-      
-    },
-    cardGrid: {
-      paddingTop: theme.spacing(8),
-      paddingBottom: theme.spacing(8),
-    },
-    card: {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-    },
-    cardMedia: {
-      paddingTop: "56.25%", 
-    },
-    cardContent: {
-      flexGrow: 1,
-    },
-    container: {
-      paddingTop: "100px",
-      marginRight: "1000px",
-    },
-    typography: {
-      fontFamily: '"Apple Color Emoji"',
-    },
-    logo: {
-      marginLeft: "20px",
-    },
-    appBar:{
-      backgroundImage: `url(${Image1})`,
-      backgroundPosition: "center",
-      backgroundRepeat: "norepeat",
-      backgroundSize: "cover",
-      opacity:"0.9"
-    },link:{
-    margin:"8px",
-    textDecoration:"none",
-    }
-  }));
-  
+import { Badge } from "@mui/material";
+
 
 
     export default function Header() {
 const dispatch = useDispatch();
 const history = useNavigate();
+
+const {cartItems} = useSelector(state => state.cart)
       const { user, loading, isAuthenticated } = useSelector((state) => state.user);
       const [anchorEl, setAnchorEl] = React.useState(null);
       const open = Boolean(anchorEl);
@@ -150,10 +96,13 @@ const history = useNavigate();
 
       <Link to="/products" style={{textDecoration:"none", marginRight:"80px",marginLeft:"28px"}}>    <Search/></Link>
 
-        
-         <Link to="/cart" className={classes.link}><CartIcon style={{ color: "black" }}/></Link>
+      <Badge anchorOrigin={{
+    vertical: 'top',
+    horizontal: 'left'}} badgeContent={cartItems.length}  color="primary">
+      <Link to="/cart" className={classes.link}><CartIcon style={{ color: "black" }}/></Link>
+    </Badge>
      
-   <div>
+   <div >
     <Stack direction="row" spacing={2}  onClick={handleClick}>
       <Avatar><UserIcon/></Avatar>
      
@@ -187,3 +136,60 @@ const history = useNavigate();
 
 
 
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    marginRight: theme.spacing(2),
+    color:"black"
+  },
+
+  heroContent: {
+    minHeight: "100vh",
+    backgroundImage: `url(${Image})`,
+    height: "100%",
+    backgroundPosition: "center",
+    backgroundRepeat: "norepeat",
+    backgroundSize: "cover",
+    color:"white",
+    clipPath: "circle(75.6% at 34% 0)",
+  },
+
+  heroButtons: {
+    marginTop: theme.spacing(4),
+    
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardMedia: {
+    paddingTop: "56.25%", 
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  container: {
+    paddingTop: "100px",
+    marginRight: "1000px",
+  },
+  typography: {
+    fontFamily: '"Apple Color Emoji"',
+  },
+  logo: {
+    marginLeft: "20px",
+  },
+  appBar:{
+    backgroundImage: `url(${Image1})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "norepeat",
+    backgroundSize: "cover",
+    opacity:"0.9"
+  },link:{
+  margin:"8px",
+  textDecoration:"none",
+  }
+}));

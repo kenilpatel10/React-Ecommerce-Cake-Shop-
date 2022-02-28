@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
   
 }));
-export default function FormDialog() {
+export default function FormDialog({}) {
 const history= useNavigate();
 
 
@@ -42,24 +42,23 @@ const history= useNavigate();
   const loginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
-    if(isAuthenticated){
-      history('/account')
-    }
-      
   };
 
+  // const redirect = location.search ? location.search.split("=")[1] : "/account";
+ 
   useEffect(() => {
     
   if(error){
   
     dispatch(clearErrors())
   }
-  // if (isAuthenticated){
 
-  // }
+  if (isAuthenticated) {
+    history("/account");
+  }
 
   
-  }, [dispatch, error,isAuthenticated])
+  }, [dispatch, error,isAuthenticated,history])
   
   const [open, setOpen] = React.useState(false);
 
