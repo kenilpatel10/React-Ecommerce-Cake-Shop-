@@ -8,9 +8,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "./img/mainlogo.png"
+import Image from "../img/mainlogo.png"
 import {useDispatch , useSelector} from "react-redux"
-import {login, clearErrors} from "../actions/userAction"
+import {login, clearErrors} from "../../redux/actions/userAction"
 import {useAlert} from "react-alert";
 import {useNavigate} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
@@ -27,14 +27,10 @@ const history= useNavigate();
 
   const {error, loading , isAuthenticated} = useSelector(state=> state.user)
   console.log("///",error)
-  // const alert = useAlert();
+  const alert = useAlert();
  
  const dispatch = useDispatch();
-  // const [userLogin, setUserLogin] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-
+ 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -42,6 +38,7 @@ const history= useNavigate();
   const loginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
+    alert.success("Successfully Logged In ")
   };
 
   // const redirect = location.search ? location.search.split("=")[1] : "/account";
@@ -49,7 +46,7 @@ const history= useNavigate();
   useEffect(() => {
     
   if(error){
-  
+  alert.error(error);
     dispatch(clearErrors())
   }
 
@@ -58,7 +55,7 @@ const history= useNavigate();
   }
 
   
-  }, [dispatch, error,isAuthenticated,history])
+  }, [dispatch, error,alert,isAuthenticated,history])
   
   const [open, setOpen] = React.useState(false);
 

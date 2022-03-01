@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
 import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Header from "./layout/Header";
+import Header from "../layout/Header";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Button, Input, Card, Container } from "@mui/material";
-import Shortcut from "./layout/Shortcut";
+import Shortcut from "../layout/Shortcut";
 import Typography from "@mui/material/Typography";
-import Loader from "./layout/Loader";
+import Loader from "../layout/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import UpdateProfile from "./UpdateProfile";
 import UpdatePassword from "./UpdatePassword";
-
+import Aos from "aos"
+import "aos/dist/aos.css"
 const Profile = () => {
   const history = useNavigate();
 
   const { isAuthenticated, user, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
+    Aos.init({duration:1000});
     if (isAuthenticated === false) {
       history("/");
       alert("please login...");
@@ -32,8 +34,8 @@ const Profile = () => {
         ) : (
           <div>
             <Header />
-
-            <div className={classes.grid}>
+<div style={{padding:"50px"}}> </div>
+            <div  data-aos="fade-up" className={classes.grid}>
               <Grid
                 container
                 rowSpacing={1}
@@ -125,10 +127,8 @@ const useStyles = makeStyles((theme) => ({
     padding: "50px",
     backgroundColor: "white",
     height: "450px",
-    width: "800px",
-    //  margin:"50px",
+    width: "800px", 
     marginLeft: "250px",
-    marginTop: "100px",
     borderRadius: "30px",
     boxShadow:
       "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",

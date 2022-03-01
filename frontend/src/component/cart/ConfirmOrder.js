@@ -9,13 +9,13 @@
     import { useDispatch } from "react-redux";
     import { makeStyles } from "@material-ui/core/styles";
     import { Grid } from "@material-ui/core";
-    import { addItemsToCart, removeItemsFromCart } from "../actions/cartAction";
+    import { addItemsToCart, removeItemsFromCart } from "../../redux/actions/cartAction";
     import RemoveIcon from "@mui/icons-material/HighlightOff";
     import NoCartIcon from "@mui/icons-material/RemoveShoppingCart";
     import { Link } from "react-router-dom";
-    import Shortcut from "./layout/Shortcut";
+    import Shortcut from "../layout/Shortcut";
     import { useNavigate } from "react-router-dom";
-    import CheckOutStepper from "./layout/CheckOutStepper"
+    import CheckOutStepper from "../layout/CheckOutStepper"
 
     const ConfirmOrder = () => {
     const classes = useStyles();

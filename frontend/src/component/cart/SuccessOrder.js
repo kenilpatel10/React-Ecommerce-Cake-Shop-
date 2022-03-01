@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import React, { useLayoutEffect } from 'react';
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -123,6 +123,11 @@ const SuccessAnimation = ({ color = 'green', text = 'Payment Successfull', liveR
     if (liveRegion) window.document.getElementById(liveRegion).innerHTML = text
   }, [])
 
+  const history = useNavigate();
+  const handleViewOrder=()=>{
+
+    history("/orders")
+  }
   return (
     <><Container>
     <div  style={{marginTop:"200px",marginBottom:"80px"}}>
@@ -137,7 +142,7 @@ const SuccessAnimation = ({ color = 'green', text = 'Payment Successfull', liveR
     </div>
     {
       text && <Message  className="message" color={color}>{text} <div>
-      <Button variant="contained"  color="warning" style={{margin:"20px 50px"}}>View Your Orders</Button> </div></Message>
+      <Button variant="contained"  color="warning" style={{margin:"20px 50px"}} onClick={handleViewOrder}>View Your Orders</Button> </div></Message>
      
     }
 

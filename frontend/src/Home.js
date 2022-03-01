@@ -9,25 +9,115 @@ import CategoryLibrary from "./component/layout/CategoryLibrary";
 import Services from "./component/layout/Services";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "./actions/productAction";
-import Loader from "./component/layout/Loader.js";
+import { getProduct } from "./redux/actions/productAction";
+
 import Button from "@material-ui/core/Button";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Fade from '@mui/material/Fade';
+
 import Typography from "@material-ui/core/Typography";
 
 import Image1 from "../src/component/img/cake.jpg";
 
 import Logo from "../src/component/img/cakelogo3.png";
-import Box from '@mui/material/Box';
-import Switch from '@mui/material/Switch';
-import Paper from '@mui/material/Paper';
-import Grow from '@mui/material/Grow';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
+import Aos from "aos"
+import "aos/dist/aos.css"
 import CommonHeader from "./component/layout/Header";
 import Shortcut from "./component/layout/Shortcut";
+
+const Home = ({ product }) => {
+  const dispatch = useDispatch();
+
+
+
+  const { loading, error, products, productCount } = useSelector(
+    (state) => state.products
+  );
+  const {isAuthenticated, user} = useSelector(state=> state.user)
+
+  useEffect(() => { 
+    Aos.init({duration:1000});
+   
+      dispatch(getProduct())
+   
+    
+  }, [dispatch]);
+  const classes = useStyles();
+  return (
+    <>
+      
+    
+        <main>
+          <React.Fragment>
+            <CssBaseline />
+
+            <CommonHeader />
+            <main className={classes.main}>
+            {isAuthenticated && <Shortcut user={user}/>}  
+          
+              <div  className={classes.heroContent}>
+              
+                <Container  data-aos="fade-up" maxWidth="sm" className={classes.container}>
+                  <img
+                    style={{
+                      height: "400px",
+                      width: "auto",
+                      marginLeft: "100px",
+                      marginTop: "-100px",
+                      marginBottom: "-80px",
+                    }}
+                    src={Logo}
+                    alt="."
+                  ></img>
+
+                  <Typography
+                    variant="h6"
+                    align="center"
+                    color="textSecondary"
+                    paragraph
+                  >
+                    All types Of cakes .... We served you with the best quility
+                    as well as best flavors that differs us from other cake
+                    shops..
+                  </Typography>
+
+                  <div   data-aos="fade-up" className={classes.heroButtons}>
+                    <Grid container spacing={2} justifyContent="center">
+                      <Grid item>
+                        <Button href="#scroll"  variant="contained" color="primary">
+                          Explore More
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </Container>
+              </div>
+            </main>
+          </React.Fragment>
+          <div  data-aos="fade-up">
+          <Services />
+          </div>
+          <div  data-aos="fade-up">
+          <CategoryLibrary />
+          </div>
+         
+          <>
+            <Container  data-aos="fade-up" className={classes.cardGrid} maxWidth="md">
+              <Grid  data-aos="fade-up" container spacing={4}>
+                {products &&
+                  products.map((product) => <Cards  data-aos="fade-up" product={product} />)}
+              </Grid>
+            </Container>
+          </>
+          <Footer />
+        </main>
+
+    </>
+  );
+};
+
+export default Home;
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -98,98 +188,3 @@ const useStyles = makeStyles((theme) => ({
   position: "absolute",
   zIndex: -2,
 }));
-
-const Home = ({ product }) => {
-  const dispatch = useDispatch();
-
-  const fetchProduct =()=>{
-    setTimeout(() => {
-      }, 3000);
-  
-        
-}
-
-
-  const { loading, error, products, productCount } = useSelector(
-    (state) => state.products
-  );
-  const {isAuthenticated, user} = useSelector(state=> state.user)
-
-  useEffect(() => { 
-    const timer = setTimeout(() => {
-      dispatch(getProduct())
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [dispatch]);
-  const classes = useStyles();
-  return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <main>
-          <React.Fragment>
-            <CssBaseline />
-
-            <CommonHeader />
-            <main className={classes.main}>
-            {isAuthenticated && <Shortcut user={user}/>}  
-          
-              <div className={classes.heroContent}>
-              
-                <Container maxWidth="sm" className={classes.container}>
-                  <img
-                    style={{
-                      height: "400px",
-                      width: "auto",
-                      marginLeft: "100px",
-                      marginTop: "-100px",
-                      marginBottom: "-80px",
-                    }}
-                    src={Logo}
-                    alt="."
-                  ></img>
-
-                  <Typography
-                    variant="h6"
-                    align="center"
-                    color="textSecondary"
-                    paragraph
-                  >
-                    All types Of cakes .... We served you with the best quility
-                    as well as best flavors that differs us from other cake
-                    shops..
-                  </Typography>
-
-                  <div className={classes.heroButtons}>
-                    <Grid container spacing={2} justifyContent="center">
-                      <Grid item>
-                        <Button href="#scroll"  variant="contained" color="primary">
-                          Explore More
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </Container>
-              </div>
-            </main>
-          </React.Fragment>
-          <Services />
-          <CategoryLibrary/>
-          <>
-            <Container className={classes.cardGrid} maxWidth="md">
-              <Grid container spacing={4}>
-                {products &&
-                  products.map((product) => <Cards product={product} />)}
-              </Grid>
-            </Container>
-          </>
-          <Footer />
-        </main>
-      )}
-    </>
-  );
-};
-
-export default Home;
-

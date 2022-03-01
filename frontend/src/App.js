@@ -4,26 +4,26 @@ import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 
 import Home from './Home';
 
-import ProductDetails from './component/ProductDetails';
-import AllProducts from './component/AllProducts';
+import ProductDetails from './component/product/ProductDetails';
+import AllProducts from './component/product/AllProducts';
 import Search from './component/layout/Search';
 import store from "./store"
-import { loadUser } from './actions/userAction';
-import UpdateProfile from './component/UpdateProfile';
+import { loadUser } from './redux/actions/userAction';
+import UpdateProfile from './component/user/UpdateProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import Shortcut from "./component/layout/Shortcut"
-import Profile from './component/Profile';
-import UpdatePassword from './component/UpdatePassword';
-import Cart from './component/Cart';
-import Shipping from './component/Shipping';
-import ConfirmOrder from './component/ConfirmOrder';
+import Profile from './component/user/Profile';
+
+import UpdatePassword from './component/user/UpdatePassword';
+import Cart from './component/cart/Cart';
+import Shipping from './component/cart/Shipping';
+import ConfirmOrder from './component/cart/ConfirmOrder';
 import axios from 'axios';
-import Payment from './component/Payment';
+import Payment from './component/cart/Payment';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import OrderSuccess from './component/OrderSuccess';
-import SuccessAnimation from './component/layout/SuccessAnimation';
-
+import SuccessOrder from "./component/cart/SuccessOrder"
+import MyOrders from "./component/order/MyOrders"
 function App() {
   // const dispatch = useDispatch();
 
@@ -46,6 +46,7 @@ function App() {
 <><Router>
  
  <Routes>
+
    <Route exact path="/" element={<Home/>}  />
    <Route path="/product/:id" element={<ProductDetails/>}  />
    <Route path="/products" element={<AllProducts/>}  />
@@ -56,11 +57,12 @@ function App() {
    <Route path="/shipping" element={<Shipping/>}  />
    <Route path="/order/confirm" element={<ConfirmOrder/>}  />
 
-   <Route path="/success" element={<SuccessAnimation/>}  />
+   <Route path="/success" element={<SuccessOrder/>}  />
 
 
 <Route path="/process/payment" element={<Elements stripe={loadStripe(stripeApiKey)}><Payment/></Elements>}  />
 
+<Route path="/orders" element={<MyOrders/>}  />
 
 
 
@@ -69,7 +71,7 @@ function App() {
 </Router></>
 
 
-   
+
   
   );
 }

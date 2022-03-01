@@ -2,17 +2,23 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import { Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductDetails } from "../actions/productAction";
+import { getProductDetails } from "../../redux/actions/productAction";
 import { useParams } from "react-router-dom";
-import Header from "./layout/Header";
+import Header from "../layout/Header";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Grid ,Button, Input} from "@mui/material";
-import Shortcut from "./layout/Shortcut";
-import Loader from "./layout/Loader";
-import { addItemsToCart } from "../actions/cartAction"; 
-
+import Shortcut from "../layout/Shortcut";
+import Loader from "../layout/Loader";
+import { addItemsToCart } from "../../redux/actions/cartAction"; 
+import Loader2 from "../layout/Loader2";
+import Aos from "aos"
+import "aos/dist/aos.css"
+import { useAlert } from "react-alert";
 const ProductDetails = () => {
+
+
+  const alert = useAlert();
   const { product,loading } = useSelector((state) => state.productDetails);
   const product_Id = useParams();
   const {isAuthenticated, user} = useSelector(state=> state.user)
@@ -33,22 +39,24 @@ if(1 >= quantity ) return;
 
  const handleAddToCart=()=>{
   dispatch(addItemsToCart(product_Id.id, quantity))
-  alert("added to cart")
+  alert.success("added to cart")
  }  
 
   const dispatch = useDispatch();
   useEffect(() => {
+    Aos.init({duration:1000});
     dispatch(getProductDetails(product_Id.id));
   }, [dispatch]);
 
   const classes = useStyles();
   return (
     <Fragment >
-      {loading ? (<Loader/>):( <div className={classes.heroContent}>
-      <Header />  
-       <div className={classes.grid}>
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >
-  <Grid item xs={6}>
+      {loading ? (<Loader2/>):( <div className={classes.heroContent}>
+      <Header /> 
+      <div style={{padding:"40px"}}></div>    
+       <div   data-aos="fade-up" className={classes.grid}>
+          <Grid  container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >
+  <Grid   data-aos="fade-up" item xs={6}>
   <div>
           <Carousel className={classes.grid1}>
             {product.images &&
@@ -63,7 +71,7 @@ if(1 >= quantity ) return;
           </Carousel>
         </div>
   </Grid>
-  <Grid item xs={6} >
+  <Grid   data-aos="fade-up" item xs={6} >
           <div > 
           {isAuthenticated && <Shortcut user={user}/>}  
             <h2>{product.name}</h2>
@@ -72,12 +80,12 @@ if(1 >= quantity ) return;
           <div className="detailsBlock-3">
             <h1>{`₹${product.price}`}</h1>
             <div className="detailsBlock-3-1">
-              <div className="detailsBlock-3-1-1">
-                    <Button onClick={decreaseQuantity}>- kg</Button>
+              <div >
+                    <Button style={{margin:"0px 10px 10px  0px ", borderRadius:"50%"}}  variant="contained" onClick={decreaseQuantity}>- kg</Button>
                     <Input  style={{width:"30px", textAlign:"center"}} readOnly value={quantity} type="number"/>
-                    <Button onClick={increaseQuantity} >+ kg</Button>
+                    <Button   style={{margin:"0px 0px 10px  10px ", borderRadius:"50%"  }} variant="contained" onClick={increaseQuantity} >+ kg</Button>
               </div>
-              <Button variant="contained" color="warning" onClick={handleAddToCart} >
+              <Button     style={{margin:"0px 10px 10px  0px "}} variant="contained" color="warning" onClick={handleAddToCart} >
                 Add to Cart
               </Button>
             </div>
@@ -133,17 +141,18 @@ typography: {
     padding:"50px",
      backgroundColor:"white",
      height:"450px",
-      width:"auto",
+      width:"900px",
      margin:"50px",
-     marginTop:"100px",
+     marginLeft:"250px",
+     
      borderRadius:"30px", boxShadow: "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
     },
     grid1:{
       
        backgroundColor:"white",
        height:"350px",
-        width:"auto",
-       margin:"100px",
+        width:"300px",
+       margin:"30px",
        marginTop:"0px",
        borderRadius:"30px", boxShadow: "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
       }

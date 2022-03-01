@@ -1,18 +1,16 @@
 import React from 'react'
-import CheckOutStepper from './layout/CheckOutStepper'
+import CheckOutStepper from '../layout/CheckOutStepper'
 import { useSelector, useDispatch } from 'react-redux'
 import {CardNumberElement, CardCvcElement, CardExpiryElement,useStripe, useElements} from "@stripe/react-stripe-js"
-import { Button, FormControl, Grid, Hidden } from "@mui/material";
+import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import { InputAdornment } from "@mui/material";
-import { TextField } from "@mui/material";
-import Image from "./img/mainlogo.png";
+import Image from "../img/mainlogo.png";
 import { useRef, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { clearErrors, createOrder } from '../actions/orderAction';
-import OrderSuccess from './OrderSuccess';
+import { clearErrors, createOrder } from '../../redux/actions/orderAction';
+
 
 
 const Payment = () => {
@@ -160,7 +158,7 @@ const history = useNavigate();
         color="warning"
         onClick={submitHandler}
       >
-    {`Pay - ₹${OrderInfo && OrderInfo.totalPrice}`}<OrderSuccess/>  
+    {`Pay - ₹${OrderInfo && OrderInfo.totalPrice}`}  
       </Button>
               </div>
             </div>

@@ -8,13 +8,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "./img/mainlogo.png"
-// import { UPDATE_PROFILE_RESET } from "../constants/userConstants/UPDATE_PROFILE_RESET ";
+import Image from "../img/mainlogo.png"
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "../actions/userAction";
-import { loadUser, clearErrors } from "../actions/userAction";
+import { updateProfile } from "../../redux/actions/userAction";
+import { loadUser, clearErrors } from "../../redux/actions/userAction";
 import { useNavigate } from "react-router-dom";
-import {UPDATE_RESET} from "../constants/userConstants"
+import {UPDATE_RESET} from "../../redux/constants/userConstants"
 const useStyles = makeStyles((theme) => ({
 
     button: {

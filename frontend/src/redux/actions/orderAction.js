@@ -3,6 +3,7 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
   CLEAR_ERRORS,
+  MY_ORDER_SUCCESS,MY_ORDER_REQUEST,MY_ORDER_FAIL
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -33,3 +34,23 @@ export const clearErrors = () => async (dispatch) => {
     type: CLEAR_ERRORS,
   });
 };
+export const myOrders = (order) => async (dispatch) => {
+  try {
+    dispatch({ type: MY_ORDER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.get("/api/v1/orders/me");
+
+    dispatch({ type: MY_ORDER_SUCCESS, payload: data.orders });
+  } catch (error) {
+    dispatch({
+      type: MY_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+

@@ -8,9 +8,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "./img/mainlogo.png"
+import Image from "../img/mainlogo.png"
 import { typography } from "@mui/system";
-import { register } from "../actions/userAction";
+import { register } from "../../redux/actions/userAction";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({

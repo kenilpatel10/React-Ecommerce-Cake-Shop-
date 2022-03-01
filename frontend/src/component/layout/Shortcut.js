@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import ProfileIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LogoutIcon from '@mui/icons-material/LogoutTwoTone';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../actions/userAction';
+import { logout } from '../../redux/actions/userAction';
 import { Backdrop } from '@material-ui/core';
 import CartIcon from '@mui/icons-material/ShoppingCart';
 
