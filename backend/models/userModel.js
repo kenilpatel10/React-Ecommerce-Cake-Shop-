@@ -40,6 +40,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  product: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Product",
+    required: true,
+  },
  
 
   resetPasswordToken: String,

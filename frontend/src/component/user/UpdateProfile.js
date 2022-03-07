@@ -14,6 +14,7 @@ import { updateProfile } from "../../redux/actions/userAction";
 import { loadUser, clearErrors } from "../../redux/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import {UPDATE_RESET} from "../../redux/constants/userConstants"
+import { Typography } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
 
     button: {
@@ -103,7 +104,7 @@ export default function UpdateProfile() {
        <Dialog open={open} onClose={handleClose}>
         
         <DialogContent>
-        <DialogTitle color="text">Update<img style={{height:"200px",marginBottom:"-110px",marginLeft:"228px",marginTop:"-100px", width:"auto"}} src={Image} alt='.'></img></DialogTitle>
+        <DialogTitle color="text">Update<Typography  sx={{flexGrow:"1", display:{xs:"none", sm:"flex", md:"flex", lg:"flex"}}} ><img  style={{height:"200px",marginBottom:"-110px",marginLeft:"228px",marginTop:"-100px", width:"auto"}} src={Image} alt='.'/></Typography></DialogTitle>
          
           <DialogContentText >
             If you want to update your profile then please fill all
@@ -135,7 +136,7 @@ export default function UpdateProfile() {
           />{" "}
          
           <div id="UpdateImage">
-                  <img src={avatarPreview}  style={{height:"100px", width:"auto"}}alt="Avatar Preview" />
+                  <img src={avatarPreview}  style={{height:"56px", width:"56px", borderRadius:"50%"}}alt="Avatar Preview" />
                   <input
                     type="file"
                     name="avatar"

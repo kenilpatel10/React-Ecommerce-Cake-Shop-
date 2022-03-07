@@ -13,7 +13,7 @@ export default function MediaControlCard() {
 
   return (
 <Container>
-    <Grid container spacing={{ xs: 5, md: 5 }} style={{marginLeft:"10px",marginTop:"30px"}} >
+    <Grid container spacing={{ xs: 2, md: 5 }} style={{marginLeft:"10px",marginTop:"0px"}} >
  
     <Grid item  style={{padding:"30px"}} >
       <Card sx={{ display: 'flex' }} style={{ padding:"20px", borderRadius:"30px", boxShadow: "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"}}>

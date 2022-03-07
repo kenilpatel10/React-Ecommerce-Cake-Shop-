@@ -25,7 +25,7 @@ import "aos/dist/aos.css"
 import CommonHeader from "./component/layout/Header";
 import Shortcut from "./component/layout/Shortcut";
 
-const Home = ({ product }) => {
+const Home = () => {
   const dispatch = useDispatch();
 
 
@@ -59,19 +59,13 @@ const Home = ({ product }) => {
               
                 <Container  data-aos="fade-up" maxWidth="sm" className={classes.container}>
                   <img
-                    style={{
-                      height: "400px",
-                      width: "auto",
-                      marginLeft: "100px",
-                      marginTop: "-100px",
-                      marginBottom: "-80px",
-                    }}
+                  className={classes.img}
                     src={Logo}
                     alt="."
                   ></img>
 
                   <Typography
-                    variant="h6"
+                   className={classes.text}
                     align="center"
                     color="textSecondary"
                     paragraph
@@ -109,7 +103,7 @@ const Home = ({ product }) => {
               </Grid>
             </Container>
           </>
-          <Footer />
+          {/* <Footer /> */}
         </main>
 
     </>
@@ -133,8 +127,25 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     color: "white",
     clipPath: "circle(75.6% at 34% 0)",
-  },
+  },text:{
 
+    [theme.breakpoints.up('xs')]: {
+      fontSize:"12px",
+      margin:"70px 0px 0px 50px"
+    },
+[theme.breakpoints.up('sm')]: {
+  fontSize:"18px",
+  marginTop:"10px",
+  marginRight:"20px"
+},
+[theme.breakpoints.up('md')]: {
+  fontSize:"18px"
+},
+[theme.breakpoints.up('lg')]: {
+  fontSize:"20px",
+  marginTop:"-30px"
+},
+  },
   heroButtons: {
     marginTop: theme.spacing(4),
   },
@@ -160,8 +171,35 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     fontFamily: '"Apple Color Emoji"',
   },
-  logo: {
-    marginLeft: "20px",
+  img:{
+    [theme.breakpoints.up('xs')]: {
+      height: "250px",
+      width: "auto",
+      marginLeft: "60px",
+      marginTop: "-100px",
+      marginBottom: "-90px",
+    }, [theme.breakpoints.up('sm')]: {
+      height: "250px",
+      width: "auto",
+      marginLeft: "150px",
+      marginTop: "-100px",
+      marginBottom: "-80px",
+    },
+    [theme.breakpoints.up('md')]: {
+      height: "400px",
+    width: "auto",
+    marginLeft: "100px",
+    marginTop: "-100px",
+    marginBottom: "-80px",
+    },
+    [theme.breakpoints.up('lg')]: {
+      height: "400px",
+    width: "auto",
+    marginLeft: "100px",
+    marginTop: "-80px",
+    marginBottom: "-80px",
+    },
+  
   },
   appBar: {
     backgroundImage: `url(${Image1})`,
@@ -170,21 +208,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     opacity: "0.9",
   },
-  "@global": {
-    "@keyframes pulsate": {
-      from: {
-        opacity: 1,
-        transform: "scale(1)",
-      },
-      to: {
-        opacity: 0,
-        transform: "scale(2)",
-      },
-    }
-  },
-  background: theme.palette.primary.main,
-  borderRadius: "100%",
-  animation: "$plusate 1s infinite ease",
-  position: "absolute",
-  zIndex: -2,
+ 
+
 }));

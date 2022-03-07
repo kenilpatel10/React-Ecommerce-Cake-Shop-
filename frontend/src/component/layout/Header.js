@@ -3,6 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
+import { Fragment } from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -31,7 +32,9 @@ import { logout } from "../../redux/actions/userAction";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "@mui/material";
-
+import HomeDrawer from "./HomeDrawer";
+import { Button } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 export default function Header() {
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -62,44 +65,45 @@ export default function Header() {
       <CssBaseline />
       <AppBar className={classes.appBar} position="fixed">
         <Toolbar>
+          <HomeDrawer />
           <img
-            style={{
-              height: "200px",
-              width: "auto",
-              marginRight: "230px",
-              marginTop: "-50px",
-              marginBottom: "-90px",
-            }}
+          className={classes.logo}
             src={Logo1}
             alt="."
           ></img>
-          <HomeIcon style={{ color: "black" }} />{" "}
-          <Link to="/" className={classes.link}>
-            Home
-          </Link>
-          <ProductIcon style={{ color: "black" }} />
-          <Link to="/products" className={classes.link}>
-            Products
-          </Link>
-          <ContactIcon style={{ color: "black" }} />
-          <Link to="/" className={classes.link}>
-            Contact Us
-          </Link>
-          <AboutIcon style={{ color: "black" }} />
-          <Link to="/" className={classes.link}>
-            About Us
-          </Link>
-          <Link
+       
+          <Box component="div" sx={{  flexGrow: 1,display: {xs: "none" ,sm: "none", md: "none", lg:"inline" }}}>
+
+
+
+
+         
+          <Button to="/" component={Link}>
+          <HomeIcon  style={{ color: "black" }} /> Home
+          </Button>
+          
+          <Button component={Link} to="/products" >
+          <ProductIcon style={{ color: "black" }} />Products
+          </Button>
+        
+          <Button to="/" component={Link}>
+          <ContactIcon style={{ color: "black" }} />   Contact
+          </Button>
+         
+          <Button to="/" component={Link} >
+          <AboutIcon style={{ color: "black" }} /> About
+          </Button>
+          <Button
             to="/products"
             style={{
               textDecoration: "none",
-              marginRight: "80px",
+              marginRight: "30px",
               marginLeft: "28px",
             }}
           >
             {" "}
             <Search />
-          </Link>
+          </Button>
           <Badge
             anchorOrigin={{
               vertical: "top",
@@ -112,10 +116,16 @@ export default function Header() {
               <CartIcon style={{ color: "black" }} />
             </Link>
           </Badge>
-          <div>
+
+          </Box>
+         
+       
+         
+          <div className={classes.avatar}>
             <Stack direction="row" spacing={2} onClick={handleClick}>
               <Avatar>
-                <UserIcon />
+                <UserIcon />  
+                {/* <img src={user.avatar.url}  style={{height:"56px", width:"56px",borderRadius: "50%"}} alt='profile'/> */}
               </Avatar>
             </Stack>
 
@@ -163,7 +173,19 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     color: "black",
   },
+avatar:{
+  [theme.breakpoints.up('xs')]: {
+    marginLeft:"30px"
+  }, [theme.breakpoints.up('sm')]: {
+    marginLeft:"90px"
+  },  [theme.breakpoints.up('md')]: {
+    marginLeft:"450px"
+  }, [theme.breakpoints.up('lg')]: {
+    marginLeft:"0px"
+  },
 
+
+},
   heroContent: {
     minHeight: "100vh",
     backgroundImage: `url(${Image})`,
@@ -201,7 +223,36 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: '"Apple Color Emoji"',
   },
   logo: {
+    [theme.breakpoints.up('xs')]: {
+      height: "200px",
+      width: "auto",
+      marginRight: "0px",
+      marginTop: "-50px",
+      marginBottom: "-90px",
+      marginLeft:"50px"
+    }, [theme.breakpoints.up('sm')]: {
+      height: "200px",
+      width: "auto",
+      marginRight: "0px",
+      marginTop: "-50px",
+      marginBottom: "-90px",
+      marginLeft:"200px"
+    }, [theme.breakpoints.up('md')]: {
+      height: "200px",
+    width: "auto",
+    marginRight: "230px",
+    marginTop: "-50px",
+    marginBottom: "-90px",
     marginLeft: "20px",
+    }, [theme.breakpoints.up('lg')]: {
+      height: "200px",
+      width: "auto",
+      marginRight: "230px",
+      marginTop: "-50px",
+      marginBottom: "-90px",
+      marginLeft: "20px",
+    },
+  
   },
   appBar: {
     backgroundImage: `url(${Image1})`,

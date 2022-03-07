@@ -20,23 +20,23 @@ const dispatch= useDispatch();
 
 const {cartItems} = useSelector((state)=> state.cart)
     const actions = [
-        { icon: <ProfileIcon />, name: 'Profile' ,func: account },
-        { icon: <CartIcon/>, name: `Cart(${cartItems.length})` ,func: cart },
-        { icon: <CakeIcon />, name: 'Orders'  , func: orders},
-        { icon: <LogoutIcon />, name: 'LogOut' , func: logOutUser},
+        { icon: <ProfileIcon color='info' />, name: 'Profile' ,func: account },
+        { icon: <CartIcon color='info' />, name: `Cart(${cartItems.length})` ,func: cart },
+        { icon: <CakeIcon color='info' />, name: 'Orders'  , func: orders},
+        { icon: <LogoutIcon color='info' />, name: 'LogOut' , func: logOutUser},
         
 
       ];
 
 if(user.role === "admin"){
-    actions.unshift( { icon: <DashboardIcon />, name: 'Profile' ,func: dashboard })
+    actions.unshift( { icon: <DashboardIcon  color='info' />, name: 'Dashboard' ,func: dashboard })
  }
 
 
 
 
  function dashboard() {
-     history("/dashboard")
+     history("/admin/dashboard")
  }
  function orders() { 
      history("/orders")

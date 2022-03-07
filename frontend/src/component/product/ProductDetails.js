@@ -51,10 +51,12 @@ if(1 >= quantity ) return;
   const classes = useStyles();
   return (
     <Fragment >
+     
       {loading ? (<Loader2/>):( <div className={classes.heroContent}>
       <Header /> 
-      <div style={{padding:"40px"}}></div>    
-       <div   data-aos="fade-up" className={classes.grid}>
+      <div style={{padding:"40px"}}></div>   
+      {isAuthenticated && <Shortcut user={user}/>}  
+       <div   data-aos="fade-up" className={classes.grid}>   
           <Grid  container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >
   <Grid   data-aos="fade-up" item xs={6}>
   <div>
@@ -73,7 +75,7 @@ if(1 >= quantity ) return;
   </Grid>
   <Grid   data-aos="fade-up" item xs={6} >
           <div > 
-          {isAuthenticated && <Shortcut user={user}/>}  
+       
             <h2>{product.name}</h2>
             <p>Product # {product._id}</p>
          

@@ -14,6 +14,7 @@ import { updatePassword } from "../../redux/actions/userAction";
 import { loadUser, clearErrors } from "../../redux/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import {UPDATE_PASSWORD_RESET} from "../../redux/constants/userConstants"
+import { Typography } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
 
     button: {
@@ -85,7 +86,7 @@ export default function UpdatePassword() {
        <Dialog open={open} onClose={handleClose}>
         
         <DialogContent>
-        <DialogTitle color="text">Update Password<img style={{height:"200px",marginBottom:"-110px",marginLeft:"228px",marginTop:"-100px", width:"auto"}} src={Image} alt='.'></img></DialogTitle>
+        <DialogTitle color="text">Update Password<Typography sx={{flexGrow:"1", display:{xs:"none", sm:"flex", md:"flex", lg:"flex"}}}><img   style={{height:"200px",marginBottom:"-110px",marginLeft:"228px",marginTop:"-100px", width:"auto"}}  src={Image} alt='.'></img></Typography></DialogTitle>
          
           <DialogContentText >
             If you are first time user of our website then please fill all

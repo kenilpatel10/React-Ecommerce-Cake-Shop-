@@ -34,18 +34,13 @@ export const clearErrors = () => async (dispatch) => {
     type: CLEAR_ERRORS,
   });
 };
-export const myOrders = (order) => async (dispatch) => {
+export const myOrders = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDER_REQUEST });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
     const { data } = await axios.get("/api/v1/orders/me");
-
-    dispatch({ type: MY_ORDER_SUCCESS, payload: data.orders });
+console.log("kai b",data.orders)
+    dispatch({ type: MY_ORDER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: MY_ORDER_FAIL,

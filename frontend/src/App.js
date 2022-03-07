@@ -24,6 +24,11 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import SuccessOrder from "./component/cart/SuccessOrder"
 import MyOrders from "./component/order/MyOrders"
+import DashBoard from './component/Admin/DashBoard';
+import AdminProducts from './component/Admin/AdminProducts';
+import AddProduct from './component/Admin/AddProduct';
+import UpdateProduct from './component/Admin/UpdateProduct';
+
 function App() {
   // const dispatch = useDispatch();
 
@@ -64,9 +69,13 @@ function App() {
 
 <Route path="/orders" element={<MyOrders/>}  />
 
+<Route path="/admin/dashboard" isAdmin={true} element={<DashBoard/>}  />
 
+<Route path="/admin/products"  isAdmin={true} element={<AdminProducts/>}  />
 
+<Route path="/admin/product"  isAdmin={true} element={<AddProduct/>}  />
 
+<Route path="/admin/product/:id"  isAdmin={true} element={<UpdateProduct/>}  />
  </Routes>
 </Router></>
 

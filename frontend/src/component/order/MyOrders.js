@@ -8,7 +8,15 @@ import { clearErrors , myOrders} from '../../redux/actions/orderAction';
 
 export default function MyOrders() {
  const dispatch = useDispatch();
-    const { loading, error, orders } = useSelector((state) => state.myOrders);
+ useEffect(() => {
+
+
+  dispatch(myOrders());
+
+}, [dispatch]);
+
+const { orders } = useSelector((state) => state.myOrders);
+  
     const columns = [
         { field: 'id', headerName: 'OrderId', width: 150 },
         { field: 'status', headerName: 'Status', width: 130 },
@@ -16,27 +24,19 @@ export default function MyOrders() {
         { field: 'amount', headerName: 'Amount', width: 130 },
         { field: 'action', headerName: 'Action', width: 130 },
       ];
-      console.log(orders)
+      console.log("",orders)
       let rows = [];
       orders &&
       orders.forEach((item) => {
         rows.push({
-          itemsQty: item.orderItems.length,
+          itemsQty: item.length,
           id: item._id,
           status: item.orderStatus,
           amount: item.totalPrice,
         });
       });
 
-      useEffect(() => {
-        if (error) {
-          alert.error(error);
-          dispatch(clearErrors());
-        }
-    
-        dispatch(myOrders());
-      }, [dispatch, alert, error]);
-    
+      
   return (
       <Container> 
    

@@ -42,28 +42,26 @@ e.preventDefault();
     <div>
       <CheckOutStepper activeStep={0} />
       <div className={classes.grid}>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <div style={{ padding: "0px 40px 30px" }} >
+        <Grid container justifyContent="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <div style={{ padding: "0px 40px 0px" }} >
             <Typography className={classes.typography}>
               Shipping Info{" "}
-              <img
-                style={{
-                  height: "200px",
-                  marginBottom: "-110px",
-                  marginLeft: "320px",
-                  marginTop: "-110px",
-                  width: "auto",
-                }}
+              <Typography sx={{flexGrow:"1", display:{xs:"none", sm:"flex", md:"flex", lg:"flex"}}}>    
+                
+                 <img
+           className={classes.img}
+            
                 src={Image}
                 alt="."
-              ></img>
+              ></img></Typography>
+         
             </Typography>
           </div>
           <Grid
-            item
-            xs={6}
+                    
+            xs={12} md={6} lg={6}
             className={classes.grid1}
-            style={{ borderRight: "2px solid gray", paddingRight:"20px" }}
+            
           >
             <TextField
               fullWidth
@@ -84,6 +82,10 @@ e.preventDefault();
               margin="normal"
               label="Phone Number"
               type="number "
+              hintText="Hint Text (MultiLine)"
+              inputProps={{
+                maxLength: 10,
+              }}
               value={phoneNumber}
               onChange={(e) => {
                 setPhoneNumber(e.target.value);
@@ -106,14 +108,16 @@ e.preventDefault();
 
 
           </Grid>
-          <Grid item xs={6} className={classes.grid1}>
+          <Grid xs={0} md={6} lg={6}  className={classes.grid1}>
           <TextField
-              autoFocus
+           
               fullWidth
               margin="normal"
               label="Pin Code"
               type="number"
-              
+              inputProps={{
+                maxLength: 6
+              }}
               value={pinCode}
               onChange={(e) => {
                 setPinCode(e.target.value);
@@ -168,15 +172,16 @@ e.preventDefault();
               )}
           
           </Grid>
-        </Grid>
-        <Button
-          style={{ margin: "40px 290px" }}
+          <Button
+         sx={{marginTop:"20px"}}
           onClick={handleShip}
           variant="contained"
           color="warning"
         >
           Continue
         </Button>
+        </Grid>
+     
       </div>
     </div>
   );
@@ -190,13 +195,11 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
   },
   img: {
-    marginLeft: "10px",
-    borderRadius: "50%",
-    height: "250px",
-    width: "250px",
-    backgroundPosition: "center",
-    backgroundRepeat: "norepeat",
-    backgroundSize: "cover",
+    height: "200px",
+    marginBottom: "-110px",
+    marginLeft: "320px",
+    marginTop: "-110px",
+    width: "auto",
   },
 
   text: {
@@ -207,25 +210,45 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "30px",
   },
   grid: {
+    [theme.breakpoints.down('sm')]: {
     // textAlign: "center",
     padding: "50px",
     backgroundColor: "white",
-    height: "350px",
-    width: "700px",
+    height: "580px",
+    width: "auto",
     //  margin:"50px",
-    marginLeft: "260px",
+    marginLeft: "30px",
+    marginRight: "30px",
+
     marginTop: "10px",
     borderRadius: "30px",
     boxShadow:
+    "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+    },    [theme.breakpoints.up('lg')]: {
+      // textAlign: "center",
+      padding: "50px",
+      backgroundColor: "white",
+      height: "350px",
+      width: "700px",
+      //  margin:"50px",
+      marginLeft: "260px",
+      marginTop: "10px",
+      borderRadius: "30px",
+      boxShadow:
       "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+      },
   },
 
+
   grid1: {
+    [theme.breakpoints.up('lg')]: {
+      padding:"10px"
+    },
     textAlign: "center",
-    marginTop: "60px",
+    marginTop: "20px",
   },
   button: {
     color: "white",
-    margin: "20px 0px",
+    margin: "0px 0px",
   },
 }));

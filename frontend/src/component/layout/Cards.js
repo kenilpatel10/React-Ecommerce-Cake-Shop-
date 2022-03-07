@@ -20,7 +20,7 @@ const Cards = ({ product }) => {
       item
       key={product._id}
       xs={12}
-      sm={2}
+      sm={4}
       md={4}
     > <Card className={classes.card}>
        <Link

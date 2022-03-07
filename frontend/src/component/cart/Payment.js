@@ -113,24 +113,19 @@ const history = useNavigate();
   return (
     <div>
     <CheckOutStepper activeStep={2} />
-    <div className={classes.grid}>
-      <div style={{marginBottom:"30px"}}>
+    <div className={classes.grid} >
+      
       <Typography className={classes.typography}>
               Card Info{" "}
-              <img
-                style={{
-                  height: "200px",
-                  marginBottom: "-110px",
-                  marginLeft: "100px",
-                  marginTop: "-110px",
-                  width: "auto",
-                }}
+              <Typography sx={{flexGrow:"1", display:{xs:"flex", sm:"flex", md:"flex", lg:"flex"}}}> <img
+              className={classes.img}
                 src={Image}
                 alt="."
-              ></img>
+              ></img></Typography>
+             
             </Typography>
 
-      </div>
+
    
 
           <form onSubmit={(e) => submitHandler(e)}>
@@ -151,8 +146,6 @@ const history = useNavigate();
         
         </form>
       <Button
-        style={{ margin: "40px 100px" ,width:"50%"}}
-
                 ref={payBtn}
         variant="contained"
         color="warning"
@@ -168,40 +161,59 @@ const history = useNavigate();
 export default Payment;
 
 const useStyles = makeStyles((theme) => ({
-icon: {
-  marginRight: theme.spacing(2),
-  color: "black",
-},
+
 img: {
-  marginLeft: "10px",
-  borderRadius: "50%",
-  height: "250px",
-  width: "250px",
-  backgroundPosition: "center",
-  backgroundRepeat: "norepeat",
-  backgroundSize: "cover",
+  [theme.breakpoints.down('sm')]: {
+    height: "200px",
+    padding:"10px",
+    marginBottom: "-110px",
+    marginLeft: "0px",
+    marginTop: "-135px",
+    width: "auto",},
+
+  height: "200px",
+  padding:"10px",
+  marginBottom: "-110px",
+  marginLeft: "80px",
+  marginTop: "-130px",
+  width: "auto",
+},
+typography:{
+margin:"10px"
 },
 
-text: {
-  marginBottom: " 10px",
-},
-typography: {
-  fontFamily: '"Apple Color Emoji"',
-  fontSize: "20px",
-},
 grid: {
-  // textAlign: "center",
-  padding: "50px",
-  backgroundColor: "white",
-  height: "280px",
-  width: "400px",
-  //  margin:"50px",
-  marginLeft: "440px",
-  marginTop: "50px",
-  borderRadius: "30px",
-  boxShadow:
-    "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
-},paymentInput: {
+  [theme.breakpoints.down('sm')]: {
+ textAlign: "center",
+ padding: "50px",
+ backgroundColor: "white",
+ height: "auto",
+ width: "auto",
+ //  margin:"50px",
+ marginLeft: "20px",
+ marginRight: "20px",
+ marginTop: "50px",
+ borderRadius: "30px",
+ boxShadow:
+   "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+  },  [theme.breakpoints.up('lg')]: {
+    textAlign: "center",
+    padding: "50px",
+    backgroundColor: "white",
+    height: "auto",
+    width: "400px",
+    //  margin:"50px",
+    marginLeft: "440px",
+    marginTop: "50px",
+    borderRadius: "30px",
+    boxShadow:
+      "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+     },
+    
+ 
+},
+
+paymentInput: {
   padding: "1vmax 4vmax",
   paddingRight: "1vmax",
   width: "80%",
