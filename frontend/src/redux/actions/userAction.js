@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_FAIL,UPDATE_PASSWORD_REQUEST,UPDATE_PASSWORD_FAIL,UPDATE_PASSWORD_SUCCESS, UPDATE_PASSWORD_RESET,  UPDATE_SUCCESS,UPDATE_FAIL,UPDATE_REQUEST,UPDATE_RESET,LOGOUT_SUCCESS,LOGOUT_FAIL,LOGIN_SUCCESS ,CLEAR_ERRORS,REGISTER_FAIL,LOAD_FAIL,LOAD_REQUEST,LOAD_SUCCESS,REGISTER_REQUEST,REGISTER_SUCCESS} from "../constants/userConstants"
+import { ALL_USER_FAIL,ALL_USER_REQUEST,ALL_USER_SUCCESS,LOGIN_REQUEST, LOGIN_FAIL,UPDATE_PASSWORD_REQUEST,UPDATE_PASSWORD_FAIL,UPDATE_PASSWORD_SUCCESS, UPDATE_PASSWORD_RESET,  UPDATE_SUCCESS,UPDATE_FAIL,UPDATE_REQUEST,UPDATE_RESET,LOGOUT_SUCCESS,LOGOUT_FAIL,LOGIN_SUCCESS ,CLEAR_ERRORS,REGISTER_FAIL,LOAD_FAIL,LOAD_REQUEST,LOAD_SUCCESS,REGISTER_REQUEST,REGISTER_SUCCESS} from "../constants/userConstants"
 import axios from "axios"
 
 
@@ -78,7 +78,6 @@ dispatch({type: UPDATE_PASSWORD_SUCCESS, payload: data});
         dispatch({type: UPDATE_PASSWORD_FAIL, payload: error.response.data.message})        
     }
 }
-
 export const updateProfile= (userdata)=>async(dispatch)=>{
     try {
         dispatch({type: UPDATE_REQUEST});
@@ -94,6 +93,27 @@ dispatch({type: UPDATE_SUCCESS, payload: data});
 
     } catch (error) {
         dispatch({type: UPDATE_FAIL, payload: error.response.data.message})        
+    }
+}
+
+
+
+export const getAllUsers= ()=>async(dispatch)=>{
+    try {
+        dispatch({type: ALL_USER_REQUEST});
+
+        
+        const {data} = await axios.get(
+            `api/v1/admin/user`,
+
+        )
+   
+
+dispatch({type: ALL_USER_SUCCESS, payload: data});
+
+
+    } catch (error) {
+        dispatch({type: ALL_USER_FAIL, payload: error.response.data.message})        
     }
 }
 

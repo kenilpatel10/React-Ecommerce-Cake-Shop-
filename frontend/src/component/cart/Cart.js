@@ -18,9 +18,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Loader2 from "../layout/Loader2";
 import Aos from "aos"
+import HomeIcon from '@mui/icons-material/Home';
 import "aos/dist/aos.css"
 import { useAlert } from "react-alert";
-
+import CartIcon from '@mui/icons-material/ShoppingCartCheckout';
 export default function Cart() {
   const { cartItems, loading } = useSelector((state) => state.cart);
 const alert = useAlert();
@@ -68,8 +69,11 @@ const checkOutCart=()=>{
     <>
   {loading ? (<Loader2/>):( <div className={classes.heroContent}>
     <Container>
-          
-      <h1 style={{ textAlign: "center" , padding:"10px"}}>Cart</h1>
+      <div>
+      <Button style={{marginTop:"20px"}} component={Link} to ="/" color="inherit"><HomeIcon/></Button>
+      <h1 style={{ textAlign: "center" , padding:"10px", marginTop:"-50px"}}><CartIcon/> &nbsp;Cart</h1>
+      </div>
+  
       {isAuthenticated && <Shortcut user={user}/>}  
         {cartItems.length === 0 ? (
        
@@ -101,7 +105,10 @@ const checkOutCart=()=>{
                                                 <Grid  data-aos="fade-up" item xs={8}>
                                                   {cartItems.map((cake) => {
                                                     return (
-                                                      <Card className={classes.grid} sx={{ display: "flex" }}>
+                                              
+                                                      <Card  sx={{ display: "flex",borderRadius: "30px",  margin: "20px",
+    boxShadow:
+      "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px", }}>
                                                         <CardMedia
                                                           component="img"
                                                           sx={{ width: 151, height: 151, margin: 2 }}
@@ -199,6 +206,7 @@ const checkOutCart=()=>{
                                                           </span>
                                                         </div>
                                                       </Card>
+                                                  
                                                     );
                                                   })}
                                                 </Grid>
@@ -255,6 +263,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "40px",
     backgroundColor: "white",
     borderRadius: "30px",
+    display: "flex",
     boxShadow:
       "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
   },

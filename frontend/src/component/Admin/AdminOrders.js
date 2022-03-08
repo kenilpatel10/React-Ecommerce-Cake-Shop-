@@ -4,26 +4,26 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
 import { Container } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { clearErrors , getAdminProduct} from '../../redux/actions/productAction';
 import AdminDrawer from "../Admin/AdminDrawer"
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/ModeEditTwoTone';
 import DeleteIcon from '@mui/icons-material/DeleteTwoTone';
-import { deleteProduct } from '../../redux/actions/productAction';
-import { DELETE_PRODUCT_RESET } from '../../redux/constants/productConstatnts';
+import { DELETE_ORDER_RESET } from '../../redux/constants/orderConstants';
 import { useAlert } from 'react-alert';
+import { adminOrders } from '../../redux/actions/orderAction';
+import { deleteOrder, clearErrors } from '../../redux/actions/orderAction';
 import Aos from 'aos';
 export default function AdminProducts() {
  const dispatch = useDispatch();
  const history = useNavigate();
  const alert = useAlert();
 
- const { loading, error, products } = useSelector((state) => state.products);
- const { error: deleteError, isDeleted } = useSelector((state) => state.product);
+ const { loading, error, orders } = useSelector((state) => state.myOrders);
+ const { error: deleteError, isDeleted } = useSelector((state) => state.order);
  useEffect(() => {
-  Aos.init({duration:1000});
+    Aos.init({duration:1000});
  if(error){
 
 alert.error(error)
@@ -36,37 +36,35 @@ dispatch(clearErrors())
    }
    
 if(isDeleted){
-  alert.success("Product Successfully Deleted")
+  alert.success("Order Successfully Deleted")
   history("/admin/dashboard")
-  dispatch({type : DELETE_PRODUCT_RESET})
+  dispatch({type : DELETE_ORDER_RESET})
 }
-  dispatch(getAdminProduct());
+  dispatch(adminOrders());
 
 }, [dispatch, error, deleteError, isDeleted]);
 
     const deleteHandler =(id)=>{
       window.confirm("are you sure")
-      dispatch(deleteProduct(id))
+      dispatch(deleteOrder(id))
     }
   const columns = [
-    { field: "id", headerName: "Product ID", minWidth: 150, flex: 0.5 },
+    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.5 },
 
     {
-      field: "name",
-      headerName: "Name",
+      field: "status",
+      headerName: "Status",
       minWidth: 150,
       flex: 1,
     },
-  
-
     {
-      field: "price",
-      headerName: "Price",
-      type: "number",
-      minWidth: 150,
-      flex: 0.5,
-    },
+        field: "total",
+        headerName: "Total",
+        minWidth: 150,
+        flex: 1,
+      },
 
+   
     {
       field: "actions",
       flex: 0.3,
@@ -77,7 +75,7 @@ if(isDeleted){
       renderCell: (params)=>{
         return(
           <>
-          <Button component={Link} to ={`/admin/product/${params.getValue(params.id, "id")}`}><EditIcon/></Button>
+          <Button component={Link} to ={`/admin/order/${params.getValue(params.id, "id")}`}><EditIcon/></Button>
 <Button onClick={()=>deleteHandler(params.getValue(params.id, "id"))}><DeleteIcon/></Button>
           </>
         );
@@ -88,12 +86,13 @@ if(isDeleted){
 
   const rows = [];
 
-  products &&
-    products.forEach((item) => {
+  orders &&
+    orders.forEach((i) => {
       rows.push({
-        id: item._id,
-        price: item.price,
-        name: item.name,
+        id: i._id,
+        status: i.orderStatus,
+        total: i.totalPrice,
+        name:i.user.name
       });
     });
 
@@ -101,7 +100,7 @@ if(isDeleted){
   return (
       <Container> 
    <AdminDrawer/>
-          <div  data-aos="fade-up"  style={{padding:"80px"}}>
+          <div  data-aos="fade-up" style={{padding:"80px"}}>
         <DataGrid
         style={{   padding: "50px",
         backgroundColor: "white",

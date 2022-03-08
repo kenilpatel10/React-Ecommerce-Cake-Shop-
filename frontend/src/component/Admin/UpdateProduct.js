@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import CheckOutStepper from "../layout/CheckOutStepper";
-import { Button, FormControl, Grid, Hidden } from "@mui/material";
+import { Button, FormControl, Grid} from "@mui/material";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@mui/material";
@@ -18,6 +17,7 @@ import { useAlert } from "react-alert";
 import { UPDATE_PRODUCT_RESET } from "../../redux/constants/productConstatnts";
 import { clearErrors, updateProduct, getProductDetails} from "../../redux/actions/productAction"
 import { useParams } from "react-router-dom";
+import Aos from "aos";
 const Shipping = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -36,7 +36,6 @@ const [images, setImages] = useState([]);
 const [imagesPreview, setImagesPreview] = useState([]);
 const[oldImages, setOldImages] = useState([]);
 
-
 const categories = [
     "Anniversary",
     "Birthday",
@@ -46,7 +45,7 @@ const categories = [
     "Unique",
   ];
   useEffect(() => {
-
+    Aos.init({duration:1000});
     if (product){
         setName(product.name);
         setDescription(product.description);
@@ -107,7 +106,7 @@ e.preventDefault();
   return (
     <div>
      <AdminDrawer/>
-      <div className={classes.grid}>
+      <div   data-aos="fade-up"  className={classes.grid}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <div style={{ padding: "0px 40px 30px" }} >
             <Typography className={classes.typography}>

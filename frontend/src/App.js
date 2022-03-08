@@ -28,10 +28,10 @@ import DashBoard from './component/Admin/DashBoard';
 import AdminProducts from './component/Admin/AdminProducts';
 import AddProduct from './component/Admin/AddProduct';
 import UpdateProduct from './component/Admin/UpdateProduct';
+import AllUsers from './component/Admin/AllUsers';
+import AdminOrders from './component/Admin/AdminOrders';
 
 function App() {
-  // const dispatch = useDispatch();
-
 
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -48,10 +48,9 @@ function App() {
   }, [])
   
   return (
-<><Router>
- 
+<>
+<Router>
  <Routes>
-
    <Route exact path="/" element={<Home/>}  />
    <Route path="/product/:id" element={<ProductDetails/>}  />
    <Route path="/products" element={<AllProducts/>}  />
@@ -76,6 +75,9 @@ function App() {
 <Route path="/admin/product"  isAdmin={true} element={<AddProduct/>}  />
 
 <Route path="/admin/product/:id"  isAdmin={true} element={<UpdateProduct/>}  />
+<Route path="/admin/user"  isAdmin={true} element={<AllUsers/>}  />
+<Route path="/admin/orders"  isAdmin={true} element={<AdminOrders/>}  />
+
  </Routes>
 </Router></>
 

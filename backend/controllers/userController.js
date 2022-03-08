@@ -72,13 +72,14 @@ exports.getOneUserDetails = catchAsyncError(async(req,res,next)=>{
 // get all user detials (admin)
 exports.getAllUserDetails = catchAsyncError(async(req,res,next)=>{
 
-    // const user =await  User.findById(req.user.id);
     const user = await User.find()
   
     res.status(200).json({
         success: true,
         user,
+        
     })
+ 
 })
 exports.getUserDetails = catchAsyncError(async(req,res,next)=>{
 

@@ -94,6 +94,7 @@ export default function Header() {
           <AboutIcon style={{ color: "black" }} /> About
           </Button>
           <Button
+          component={Link}  
             to="/products"
             style={{
               textDecoration: "none",

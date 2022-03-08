@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { Container } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { clearErrors , myOrders} from '../../redux/actions/orderAction';
-
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import DetailsIcon from '@mui/icons-material/InfoTwoTone';
+import HomeIcon from '@mui/icons-material/Home';
 export default function MyOrders() {
  const dispatch = useDispatch();
  useEffect(() => {
@@ -22,14 +25,21 @@ const { orders } = useSelector((state) => state.myOrders);
         { field: 'status', headerName: 'Status', width: 130 },
         { field: 'itemQty', headerName: 'ItemQuantity', width: 130 },
         { field: 'amount', headerName: 'Amount', width: 130 },
-        { field: 'action', headerName: 'Action', width: 130 },
+        { field: 'action', headerName: 'Action', width: 130 ,renderCell: (params)=>{
+          return(
+            <>
+            <Button component={Link} to ={`/admin/order/${params.getValue(params.id, "id")}`}><DetailsIcon/></Button>
+            
+            </>
+          )
+        }},
       ];
       console.log("",orders)
       let rows = [];
       orders &&
       orders.forEach((item) => {
         rows.push({
-          itemsQty: item.length,
+          itemQty: item.orderItems.length,
           id: item._id,
           status: item.orderStatus,
           amount: item.totalPrice,
@@ -39,13 +49,14 @@ const { orders } = useSelector((state) => state.myOrders);
       
   return (
       <Container> 
-   
+<Button style={{marginTop:"20px"}} component={Link} to ="/" color="inherit"><HomeIcon/></Button>
           <div style={{padding:"80px"}}>
         <DataGrid
         style={{   padding: "50px",
         backgroundColor: "white",
         height: "450px",
         width: "800px",
+        marginTop:"-50px",
         marginLeft: "130px",
         borderRadius: "30px",
         boxShadow:

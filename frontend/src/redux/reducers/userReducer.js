@@ -1,10 +1,11 @@
-import { LOGIN_REQUEST,LOGOUT_FAIL,LOGOUT_SUCCESS,UPDATE_PASSWORD_FAIL,UPDATE_PASSWORD_REQUEST,UPDATE_PASSWORD_RESET,UPDATE_PASSWORD_SUCCESS, UPDATE_RESET,UPDATE_REQUEST,UPDATE_FAIL,UPDATE_SUCCESS,LOGIN_FAIL,LOAD_REQUEST, LOGIN_SUCCESS ,CLEAR_ERRORS, REGISTER_SUCCESS,REGISTER_REQUEST,REGISTER_FAIL, LOAD_SUCCESS, LOAD_FAIL} from "../constants/userConstants"
+import { ALL_USER_SUCCESS,ALL_USER_REQUEST,ALL_USER_FAIL,LOGIN_REQUEST,LOGOUT_FAIL,LOGOUT_SUCCESS,UPDATE_PASSWORD_FAIL,UPDATE_PASSWORD_REQUEST,UPDATE_PASSWORD_RESET,UPDATE_PASSWORD_SUCCESS, UPDATE_RESET,UPDATE_REQUEST,UPDATE_FAIL,UPDATE_SUCCESS,LOGIN_FAIL,LOAD_REQUEST, LOGIN_SUCCESS ,CLEAR_ERRORS, REGISTER_SUCCESS,REGISTER_REQUEST,REGISTER_FAIL, LOAD_SUCCESS, LOAD_FAIL} from "../constants/userConstants"
 
 export const userReducer = ( state = { user: {} }, action) =>{
     switch (action.type) {
         case LOGIN_REQUEST:
             case REGISTER_REQUEST:
                 case LOAD_REQUEST:
+                   
             return{
                 loading:true,
                 isAuthenticated:false,
@@ -12,6 +13,7 @@ export const userReducer = ( state = { user: {} }, action) =>{
             case LOGIN_SUCCESS:
                 case REGISTER_SUCCESS:
                     case LOAD_SUCCESS:
+                       
                 return{
                     loading:false,
                     isAuthenticated:true,
@@ -79,7 +81,7 @@ export const profileReducer = ( state = { user: {} }, action) =>{
                 
                 case UPDATE_FAIL:
                     case UPDATE_PASSWORD_FAIL:
-                       
+                        case ALL_USER_FAIL:
                 return{
                     ...state,
                     loading:false,
@@ -105,3 +107,36 @@ export const profileReducer = ( state = { user: {} }, action) =>{
     }
 
 }
+    export const usersReducer = ( state = { user:{} }, action) =>{
+        switch (action.type) {
+            case ALL_USER_REQUEST:
+                return{
+                    loading:true,
+                    user:{}
+                };
+                case ALL_USER_SUCCESS:
+                
+                return{
+                    loading:false,
+                    user:action.payload.user,
+                
+                
+                }; 
+                case ALL_USER_FAIL:
+                
+                    return{
+                        loading:false,
+                        error:action.payload,
+                    };
+                    case CLEAR_ERRORS:
+                
+                        return{
+                           ...state,
+                            error:null
+                        };
+                    
+        
+            default:
+                return state;
+        }
+    }

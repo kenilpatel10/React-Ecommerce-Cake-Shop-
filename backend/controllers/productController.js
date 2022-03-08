@@ -124,10 +124,10 @@ exports.deleteProduct = catchAsyncError( async (req, res, next) => {
     });
   }
 
-for (let i = 0; i < product.images.length; i++) {
-await cloudinary.v2.uploader.destroy(product.images[1].public_id)
+// for (let i = 0; i < product.images.length; i++) {
+// await cloudinary.v2.uploader.destroy(product.images[1].public_id)
   
-}
+// }
 
 
   await product.remove();

@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { NEW_PRODUCT_RESET } from "../../redux/constants/productConstatnts";
 import { clearErrors, newProduct} from "../../redux/actions/productAction"
+import Aos from "aos";
 const Shipping = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const categories = [
     "Unique",
   ];
   useEffect(() => {
+    Aos.init({duration:1000});
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -92,7 +94,7 @@ e.preventDefault();
   return (
     <div>
      <AdminDrawer/>
-      <div className={classes.grid}>
+      <div   data-aos="fade-up" className={classes.grid}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <div style={{ padding: "0px 40px 30px" }} >
             <Typography className={classes.typography}>
@@ -183,7 +185,7 @@ e.preventDefault();
   </Select>
   </FormControl>
 
-  <div id="createProductFormFile">
+  <div style={{border: "1px solid gray", height:"150px", borderRadius:"5px", overflow:"scroll" }}>
               <input
                 type="file"
                 name="avatar"
@@ -191,9 +193,9 @@ e.preventDefault();
                 onChange={imageChange}
                 multiple
               />
-            </div>
+     
 
-            <div id="createProductFormImage">
+            
               {imagesPreview.map((image, index) => (
                 <img key={index} src={image} style={{height:"100px", width:"100px "}} alt="Product Preview" />
               ))}
@@ -202,7 +204,7 @@ e.preventDefault();
           </Grid>
         </Grid>
         <Button
-          style={{ margin: "40px 290px" }}
+          style={{ margin: "40px 220px" , width:"180px"}}
           onClick={handleCreateProduct}
           variant="contained"
           color="warning"

@@ -22,8 +22,7 @@ import DashBoardIcon from '@mui/icons-material/Dashboard';
 import OrderIcon from '@mui/icons-material/LocalMall';
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import AddProduct from "./AddProduct";
-import { Button } from "@mui/material";
+
 const drawerWidth = 240; 
 
 
@@ -164,7 +163,7 @@ export default function MiniDrawer() {
           
           <ListItem button >
             <ListItemIcon>
-            <Link to="/admin/users"> <UserIcon/></Link>
+            <Link to="/admin/user"> <UserIcon/></Link>
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
@@ -198,6 +197,7 @@ const useStyles = makeStyles((theme) => ({
   grid1: {
     margin: "8%",
   },
+  
   card: {
     margin:"30px",
     padding: "20px",

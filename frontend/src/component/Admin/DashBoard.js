@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
-import { Card, Box, Typography,Container, CardContent } from "@mui/material";
+import { Card, Box, Typography,Container, CardContent, CardMedia } from "@mui/material";
 import { getAdminProduct } from '../../redux/actions/productAction';
 import AdminDrawer from '../Admin/AdminDrawer';
 import { useSelector } from 'react-redux';
@@ -11,23 +11,28 @@ import CountUp from 'react-countup';
 import CakeIcon from '@mui/icons-material/CakeTwoTone';
 import OrderIcon from '@mui/icons-material/PlaylistAddCheckCircleTwoTone';
 import UsersIcon from '@mui/icons-material/PeopleAltTwoTone';
+import { adminOrders } from '../../redux/actions/orderAction';
+import Aos from 'aos';
 const DashBoard = () => {
   const dispatch= useDispatch();
     const classes = useStyles();
    
     useEffect(() => {
- 
+      Aos.init({duration:1000});
 
       dispatch(getAdminProduct());
-    
+    dispatch(adminOrders())
     }, [dispatch]);
     const {products} = useSelector(state=> state.products)
     const {user} = useSelector(state=> state.user)
+    const {orders} = useSelector(state=> state.myOrders)
     console.log(products)
+    
   return (
     <Box sx={{ display: "flex" }}>
         <AdminDrawer/>
        <Grid
+        data-aos="fade-up" 
       className={classes.grid1}
       container
       spacing={{ xs: 2, md: 3, lg: 5 }}
@@ -35,13 +40,16 @@ const DashBoard = () => {
     >
       <Grid item xs={2} sm={4} md={4}>
   
-          <Box className={classes.card} sx={{ display: "flex", flexDirection: "column" }}>
-            <CardContent sx={{ flex: "0 auto" }}>
+        
+      <Card sx={{ display: 'flex',borderRadius:"30px", boxShadow:
+        "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"}} className={classes.card}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <CardContent sx={{ flex: "0 auto" }}>
               <Typography component="div" variant="h5">
                 Users
               </Typography>
               <Box sx={{display:"flex"}}>  <Typography
-                variant="h1"
+                variant="h2"
                 color="text.secondary"
                 component="div"
               >
@@ -54,48 +62,62 @@ const DashBoard = () => {
               </Typography>
               
             
-              <UsersIcon color="info" style={{fontSize:"150px",marginLeft:"40px"}}/></Box>
+             </Box>
             </CardContent>
-          </Box>
-      
+       
+      </Box>
+      <CardMedia
+      /> <UsersIcon color="info" style={{fontSize:"150px",marginLeft:"40px"}}/>
+    </Card>
       </Grid>
       <Grid item xs={2} sm={4} md={4}>
      
-          <Box  className={classes.card}sx={{ display: "flex", flexDirection: "column" }}>
-            <CardContent sx={{ flex: "0 auto" }}>
-              <Typography component="div" variant="h5">
+      <Card sx={{ display: 'flex',borderRadius:"30px", boxShadow:
+        "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"}} className={classes.card}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <CardContent sx={{ flex: "0 auto" }}>
+            <Typography component="div" variant="h5">
                 Orders
               </Typography>
-              <Box sx={{display:"flex"}}>  <Typography
-                variant="h1"
+              <Box sx={{display:"flex"}}> 
+               <Typography
+                variant="h2"
                 color="text.secondary"
                 component="div"
               >
-                 <CountUp
+ <CountUp
                  start={0}
-                 end=   {products && products.length}
+                 end=   {orders && orders.length}
                  duration={2.00}
                 />
+           
+                
 
               </Typography>
               
             
-              <OrderIcon color="info" style={{fontSize:"150px",marginLeft:"40px"}}/></Box>
+            </Box>
             
 
             </CardContent>
-          </Box>
+       
+      </Box>
+      <CardMedia
+      />  <OrderIcon color="info" style={{fontSize:"150px",marginLeft:"40px",}}/>
+    </Card>
      
       </Grid>
       <Grid item xs={2} sm={4} md={4}>
      
-          <Box className={classes.card}sx={{ display: "flex", flexDirection: "column" }}>
-            <CardContent >
+          <Card sx={{ display: 'flex',borderRadius:"30px", boxShadow:
+        "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px"}} className={classes.card}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <CardContent >
               <Typography component="div" variant="h5">
              Products
               </Typography>
-              <Box sx={{display:"flex"}}><Typography
-                variant="h1"
+             <Typography
+                variant="h2"
                 color="text.secondary"
                 component="div"
               //  style={{margin:"20px", marginLeft:"-60px"}}
@@ -106,11 +128,20 @@ const DashBoard = () => {
                  duration={2.00}
                 />
               </Typography>
-              <CakeIcon color="info" style={{fontSize:"150px",marginLeft:"40px"}}/></Box>
             </CardContent>
-          </Box>
+       
+      </Box>
+      <CardMedia
+      /><CakeIcon color="info" style={{fontSize:"150px"}}/>
+    </Card>   
+    
+    
+    
+   
+       
        
       </Grid>
+ 
     </Grid>
 </Box>
   )
@@ -122,11 +153,11 @@ export default DashBoard
 
 const useStyles = makeStyles((theme) => ({
     grid1: {
-      margin: "8%",
+      margin: "100px 100px 10px 50px",
     },
     card: {
-    margin:"30px",
-      padding: "20px",
+    margin:"10px",
+      padding: "10px",
       borderRadius:"30px",
       boxShadow:
         "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
