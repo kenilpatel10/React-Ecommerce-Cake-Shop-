@@ -52,7 +52,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -93,7 +92,6 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const theme = useTheme();
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -139,10 +137,10 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           
-            <ListItem button >
-              <ListItemIcon>
+            <ListItem button component={Link}  to="/admin/dashboard" >
+              <ListItemIcon >
              
-              <Link to="/admin/dashboard"> <DashBoardIcon/></Link>
+              <DashBoardIcon/>
               </ListItemIcon>
              
               <ListItemText primary="DashBoard" />
@@ -151,9 +149,9 @@ export default function MiniDrawer() {
         </List>
         <List>
           
-          <ListItem button >
+          <ListItem button   component={Link} to="/admin/orders">
             <ListItemIcon>
-            <Link to="/admin/orders"> <OrderIcon/> </Link>
+         <OrderIcon/> 
             </ListItemIcon>
            
             <ListItemText primary="Orders" />
@@ -161,9 +159,9 @@ export default function MiniDrawer() {
    
       </List>  <List>
           
-          <ListItem button >
+          <ListItem button component={Link} to="/admin/users" >
             <ListItemIcon>
-            <Link to="/admin/user"> <UserIcon/></Link>
+             <UserIcon/>
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
@@ -171,18 +169,18 @@ export default function MiniDrawer() {
       </List>
       <List>
           
-          <ListItem button >
+          <ListItem button  component={Link} to="/admin/products" >
             <ListItemIcon>
-            <Link to="/admin/products"> <ProductIcon/></Link>
+            <ProductIcon/>
             </ListItemIcon>
             <ListItemText primary="All Products" />
           </ListItem>
    
       </List><List>
           
-          <ListItem button >
+          <ListItem button    component={Link} to="/admin/product">
             <ListItemIcon>
-            <Link to="/admin/product"> <AddIcon/></Link>
+         <AddIcon/>
             </ListItemIcon>
             <ListItemText primary="Add Product" />
           </ListItem>

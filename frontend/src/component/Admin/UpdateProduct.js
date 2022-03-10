@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, FormControl, Grid} from "@mui/material";
+import { Button, FormControl, Grid } from "@mui/material";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@mui/material";
@@ -11,74 +11,76 @@ import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import AdminDrawer from "../Admin/AdminDrawer"
+import AdminDrawer from "../Admin/AdminDrawer";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { UPDATE_PRODUCT_RESET } from "../../redux/constants/productConstatnts";
-import { clearErrors, updateProduct, getProductDetails} from "../../redux/actions/productAction"
+import { clearErrors, updateProduct } from "../../redux/actions/productAction";
 import { useParams } from "react-router-dom";
 import Aos from "aos";
 const Shipping = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-    const history = useNavigate();
-    const alert = useAlert();
-const productId= useParams();
-  
-  const { loading, error: updateError, isUpdated} = useSelector((state) => state.product);
-  const { error, product} = useSelector((state)=> state.productDetails)
+  const history = useNavigate();
+  const alert = useAlert();
+  const productId = useParams();
 
-const [name, setName] = useState("");
-const [price, setPrice] = useState(0);
-const [description, setDescription] = useState("");
-const [category, setCategory] = useState("");
-const [images, setImages] = useState([]);
-const [imagesPreview, setImagesPreview] = useState([]);
-const[oldImages, setOldImages] = useState([]);
+  const { error: updateError, isUpdated } = useSelector(
+    (state) => state.product
+  );
+  const { error, product } = useSelector((state) => state.productDetails);
 
-const categories = [
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [images, setImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
+  const [oldImages, setOldImages] = useState([]);
+
+  const categories = [
     "Anniversary",
     "Birthday",
-    "Kids", 
+    "Kids",
     "Wedding",
     "Victory",
     "Unique",
   ];
   useEffect(() => {
-    Aos.init({duration:1000});
-    if (product){
-        setName(product.name);
-        setDescription(product.description);
-        setPrice(product.price);
-        setCategory(product.category);
-        setOldImages(product.images);
-      }
+    Aos.init({ duration: 1000 });
+    if (product) {
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(product.price);
+      setCategory(product.category);
+      setOldImages(product.images);
+    }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
-    }   if (updateError) {
-        alert.error(updateError);
-        dispatch(clearErrors());
-      }
+    }
+    if (updateError) {
+      alert.error(updateError);
+      dispatch(clearErrors());
+    }
     if (isUpdated) {
       alert.success("Product Updated Successfully");
       history("/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [dispatch, alert, error, updateError, history,isUpdated]);
+  }, [dispatch, alert, error, updateError, history, isUpdated]);
   const handleUpdateProduct = (e) => {
-e.preventDefault();
-      const myForm = new FormData();
-      myForm.set("name", name)
-      myForm.set("price", price)
-      myForm.set("description", description)
-      myForm.set("category", category)
+    e.preventDefault();
+    const myForm = new FormData();
+    myForm.set("name", name);
+    myForm.set("price", price);
+    myForm.set("description", description);
+    myForm.set("category", category);
 
-      images.forEach((image)=>{
-          myForm.append("images", image)
-      });
-      dispatch(updateProduct(productId, myForm))
-      console.log(myForm)
+    images.forEach((image) => {
+      myForm.append("images", image);
+    });
+    dispatch(updateProduct(productId, myForm));
   };
 
   const imageChange = (e) => {
@@ -86,7 +88,7 @@ e.preventDefault();
 
     setImages([]);
     setImagesPreview([]);
-    setOldImages([] )
+    setOldImages([]);
 
     files.forEach((file) => {
       const reader = new FileReader();
@@ -102,15 +104,14 @@ e.preventDefault();
     });
   };
 
-
   return (
     <div>
-     <AdminDrawer/>
-      <div   data-aos="fade-up"  className={classes.grid}>
+      <AdminDrawer />
+      <div data-aos="fade-up" className={classes.grid}>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <div style={{ padding: "0px 40px 30px" }} >
+          <div style={{ padding: "0px 40px 30px" }}>
             <Typography className={classes.typography}>
-         Update Cake
+              Update Cake
               <img
                 style={{
                   height: "200px",
@@ -128,7 +129,7 @@ e.preventDefault();
             item
             xs={6}
             className={classes.grid1}
-            style={{ borderRight: "2px solid gray", paddingRight:"20px" }}
+            style={{ borderRight: "2px solid gray", paddingRight: "20px" }}
           >
             <TextField
               fullWidth
@@ -136,7 +137,6 @@ e.preventDefault();
               margin="normal"
               label="Name "
               type="text"
-              
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -154,7 +154,6 @@ e.preventDefault();
                 setPrice(e.target.value);
               }}
             ></TextField>
-          
 
             <TextField
               autoFocus
@@ -167,37 +166,29 @@ e.preventDefault();
                 setDescription(e.target.value);
               }}
             />
-           
-
-
           </Grid>
           <Grid item xs={6} className={classes.grid1}>
-        
-               
-           
-          <FormControl  margin="normal" fullWidth>
-  <InputLabel id="demo-simple-select-label">Category</InputLabel>
-<Select
-    fullWidth
-    id="demo-simple-select-label"
-    label="country"
-    value={category}
-    onChange={(e) => {
-      setCategory(e.target.value);
-    }}
-  >
-    {categories &&
+            <FormControl margin="normal" fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                fullWidth
+                id="demo-simple-select-label"
+                label="country"
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                {categories &&
                   categories.map((item) => (
                     <MenuItem key={item} value={item}>
                       {item}
-                  </MenuItem>
+                    </MenuItem>
                   ))}
-   
-   
-  </Select>
-  </FormControl>
+              </Select>
+            </FormControl>
 
-  <div id="createProductFormFile">
+            <div id="createProductFormFile">
               <input
                 type="file"
                 name="avatar"
@@ -209,10 +200,14 @@ e.preventDefault();
 
             <div id="createProductFormImage">
               {imagesPreview.map((image, index) => (
-                <img key={index} src={image} style={{height:"100px", width:"100px "}} alt="Product Preview" />
+                <img
+                  key={index}
+                  src={image}
+                  style={{ height: "100px", width: "100px " }}
+                  alt="Product Preview"
+                />
               ))}
             </div>
-
           </Grid>
         </Grid>
         <Button

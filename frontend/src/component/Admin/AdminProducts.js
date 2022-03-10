@@ -1,53 +1,55 @@
-import * as React from 'react';
-import { useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useSelector } from 'react-redux';
-import { Container } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import { clearErrors , getAdminProduct} from '../../redux/actions/productAction';
-import AdminDrawer from "../Admin/AdminDrawer"
-import { Link } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/ModeEditTwoTone';
-import DeleteIcon from '@mui/icons-material/DeleteTwoTone';
-import { deleteProduct } from '../../redux/actions/productAction';
-import { DELETE_PRODUCT_RESET } from '../../redux/constants/productConstatnts';
-import { useAlert } from 'react-alert';
-import Aos from 'aos';
+import * as React from "react";
+import { useEffect } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import { useSelector } from "react-redux";
+import { Container } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import {
+  clearErrors,
+  getAdminProduct,
+} from "../../redux/actions/productAction";
+import AdminDrawer from "../Admin/AdminDrawer";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/ModeEditTwoTone";
+import DeleteIcon from "@mui/icons-material/DeleteTwoTone";
+import { deleteProduct } from "../../redux/actions/productAction";
+import { DELETE_PRODUCT_RESET } from "../../redux/constants/productConstatnts";
+import { useAlert } from "react-alert";
+import Aos from "aos";
 export default function AdminProducts() {
- const dispatch = useDispatch();
- const history = useNavigate();
- const alert = useAlert();
+  const dispatch = useDispatch();
+  const history = useNavigate();
+  const alert = useAlert();
 
- const { loading, error, products } = useSelector((state) => state.products);
- const { error: deleteError, isDeleted } = useSelector((state) => state.product);
- useEffect(() => {
-  Aos.init({duration:1000});
- if(error){
-
-alert.error(error)
-dispatch(clearErrors())
- }
- if(deleteError){
-
-  alert.error(deleteError)
-  dispatch(clearErrors())
-   }
-   
-if(isDeleted){
-  alert.success("Product Successfully Deleted")
-  history("/admin/dashboard")
-  dispatch({type : DELETE_PRODUCT_RESET})
-}
-  dispatch(getAdminProduct());
-
-}, [dispatch, error, deleteError, isDeleted]);
-
-    const deleteHandler =(id)=>{
-      window.confirm("are you sure")
-      dispatch(deleteProduct(id))
+  const { error, products } = useSelector((state) => state.products);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.product
+  );
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
     }
+    if (deleteError) {
+      alert.error(deleteError);
+      dispatch(clearErrors());
+    }
+
+    if (isDeleted) {
+      alert.success("Product Successfully Deleted");
+      history("/admin/dashboard");
+      dispatch({ type: DELETE_PRODUCT_RESET });
+    }
+    dispatch(getAdminProduct());
+  }, [dispatch, error, deleteError, isDeleted]);
+
+  const deleteHandler = (id) => {
+    window.confirm("are you sure");
+    dispatch(deleteProduct(id));
+  };
   const columns = [
     { field: "id", headerName: "Product ID", minWidth: 150, flex: 0.5 },
 
@@ -57,7 +59,6 @@ if(isDeleted){
       minWidth: 150,
       flex: 1,
     },
-  
 
     {
       field: "price",
@@ -74,15 +75,23 @@ if(isDeleted){
       minWidth: 150,
       type: "number",
       sortable: false,
-      renderCell: (params)=>{
-        return(
+      renderCell: (params) => {
+        return (
           <>
-          <Button component={Link} to ={`/admin/product/${params.getValue(params.id, "id")}`}><EditIcon/></Button>
-<Button onClick={()=>deleteHandler(params.getValue(params.id, "id"))}><DeleteIcon/></Button>
+            <Button
+              component={Link}
+              to={`/admin/product/${params.getValue(params.id, "id")}`}
+            >
+              <EditIcon />
+            </Button>
+            <Button
+              onClick={() => deleteHandler(params.getValue(params.id, "id"))}
+            >
+              <DeleteIcon />
+            </Button>
           </>
         );
-      }
-     
+      },
     },
   ];
 
@@ -97,29 +106,27 @@ if(isDeleted){
       });
     });
 
-      
   return (
-      <Container> 
-   <AdminDrawer/>
-          <div  data-aos="fade-up"  style={{padding:"80px"}}>
+    <Container>
+      <AdminDrawer />
+      <div data-aos="fade-up" style={{ padding: "80px" }}>
         <DataGrid
-        style={{   padding: "50px",
-        backgroundColor: "white",
-        height: "450px",
-        width: "800px",
-        marginLeft: "130px",
-        borderRadius: "30px",
-        boxShadow:
-          "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",}}
+          style={{
+            padding: "50px",
+            backgroundColor: "white",
+            height: "450px",
+            width: "800px",
+            marginLeft: "130px",
+            borderRadius: "30px",
+            boxShadow:
+              "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+          }}
           rows={rows}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
         />
       </div>
-         
-         
-      </Container>
-   
+    </Container>
   );
 }

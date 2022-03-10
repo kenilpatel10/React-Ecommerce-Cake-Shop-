@@ -1,9 +1,8 @@
-
-import { Button } from '@mui/material';
-import PropTypes from 'prop-types';
-import React, { useLayoutEffect } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Button } from "@mui/material";
+import PropTypes from "prop-types";
+import React, { useLayoutEffect } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -57,7 +56,7 @@ const Container = styled.div`
 
 const Cicle = styled.div`
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  border: 3px solid ${({color}) => color};
+  border: 3px solid ${({ color }) => color};
   border-radius: 50%;
   display: block;
   width: 60px;
@@ -72,9 +71,9 @@ const Cicle = styled.div`
   animation-fill-mode: forwards;
   transform: perspective(1px) translateZ(0);
   &:before {
-    content: '';
+    content: "";
     position: absolute;
-    border: ${({color}) => color} solid 7px;
+    border: ${({ color }) => color} solid 7px;
     border-radius: 50%;
     top: 0;
     right: 0;
@@ -94,8 +93,8 @@ const Tick = styled.div`
 `;
 
 const Message = styled.div`
-  color: ${({color}) => color};
-  font-family: 'Rubik', Arial;
+  color: ${({ color }) => color};
+  font-family: "Rubik", Arial;
   font-size: 28px;
   bottom: 0;
   opacity: 0;
@@ -118,46 +117,67 @@ const Message = styled.div`
   }
 `;
 
-const SuccessAnimation = ({ color = 'green', text = 'Payment Successfull', liveRegion = '' }) => {
-  useLayoutEffect(function() {
-    if (liveRegion) window.document.getElementById(liveRegion).innerHTML = text
-  }, [])
+const SuccessAnimation = ({
+  color = "green",
+  text = "Payment Successfull",
+  liveRegion = "",
+}) => {
+  useLayoutEffect(function () {
+    if (liveRegion) window.document.getElementById(liveRegion).innerHTML = text;
+  }, []);
 
   const history = useNavigate();
-  const handleViewOrder=()=>{
-
-    history("/orders")
-  }
+  const handleViewOrder = () => {
+    history("/orders");
+  };
   return (
-    <><Container>
-    <div  style={{marginTop:"200px",marginBottom:"80px"}}>
-    <Cicle  className="ripple-out" color={color}>
-      <Tick className="pop" color={color}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="22" color='green'>
-          <path d="M11.637 20.286a2.41 2.41 0 0 1-3.411 0L2.11 14.17a2.42 2.42 0 0 1 0-3.413c.943-.94 2.47-.94 3.41 0l4.412 4.412L22.87 2.23a2.41 2.41 0 1 1 3.411 3.411L11.637 20.286z" fill={color} fillRule="evenodd"/>
-        </svg>
-      </Tick>
-    </Cicle>
-   
-    </div>
-    {
-      text && <Message  className="message" color={color}>{text} <div>
-      <Button variant="contained"  color="warning" style={{margin:"20px 50px"}} onClick={handleViewOrder}>View Your Orders</Button> </div></Message>
-     
-    }
-
-
-  </Container>
- 
-</>
-        
+    <>
+      <Container>
+        <div
+          data-aos="fade-up"
+          style={{ marginTop: "200px", marginBottom: "80px" }}
+        >
+          <Cicle className="ripple-out" color={color}>
+            <Tick className="pop" color={color}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="22"
+                color="green"
+              >
+                <path
+                  d="M11.637 20.286a2.41 2.41 0 0 1-3.411 0L2.11 14.17a2.42 2.42 0 0 1 0-3.413c.943-.94 2.47-.94 3.41 0l4.412 4.412L22.87 2.23a2.41 2.41 0 1 1 3.411 3.411L11.637 20.286z"
+                  fill={color}
+                  fillRule="evenodd"
+                />
+              </svg>
+            </Tick>
+          </Cicle>
+        </div>
+        {text && (
+          <Message className="message" color={color}>
+            {text}{" "}
+            <div>
+              <Button
+                variant="contained"
+                color="warning"
+                style={{ margin: "20px 50px" }}
+                onClick={handleViewOrder}
+              >
+                View Your Orders
+              </Button>{" "}
+            </div>
+          </Message>
+        )}
+      </Container>
+    </>
   );
-}
+};
 
 SuccessAnimation.propTypes = {
   color: PropTypes.string,
   text: PropTypes.string,
-  liveRegion: PropTypes.string
-}
+  liveRegion: PropTypes.string,
+};
 
 export default SuccessAnimation;

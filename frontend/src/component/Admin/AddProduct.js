@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import CheckOutStepper from "../layout/CheckOutStepper";
-import { Button, FormControl, Grid, Hidden } from "@mui/material";
+import { Button, FormControl, Grid} from "@mui/material";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@mui/material";
@@ -24,13 +23,12 @@ const Shipping = () => {
     const history = useNavigate();
     const alert = useAlert();
 
-  const { loading, error, success } = useSelector((state) => state.newProduct);
+  const { error, success } = useSelector((state) => state.newProduct);
 
 const [name, setName] = useState("");
 const [price, setPrice] = useState(0);
 const [description, setDescription] = useState("");
 const [category, setCategory] = useState("");
-
 const [images, setImages] = useState([]);
 const [imagesPreview, setImagesPreview] = useState([]);
 
@@ -67,7 +65,6 @@ e.preventDefault();
           myForm.append("images", image)
       });
       dispatch(newProduct(myForm))
-      console.log(myForm)
   };
 
   const imageChange = (e) => {

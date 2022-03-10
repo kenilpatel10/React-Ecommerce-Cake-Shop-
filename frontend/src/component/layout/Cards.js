@@ -1,5 +1,4 @@
 import Typography from "@mui/material/Typography";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -22,33 +21,25 @@ const Cards = ({ product }) => {
       xs={12}
       sm={4}
       md={4}
-    > <Card className={classes.card}>
-       <Link
-            to={`/product/${product._id}`}
-            style={{ textDecoration: "none" }}
-          >
-     
-        <CardMedia
-          className={classes.cardMedia}
-          image="https://unsplash.com/photos/ntfGWVbBiO0/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjQ0OTI1Njkz&force=true"
-          title="Image title"
-        />
+    >
+      {" "}
+      <Card className={classes.card}>
+        <Link to={`/product/${product._id}`} style={{ textDecoration: "none" }}>
+          <CardMedia
+            className={classes.cardMedia}
+            image="https://unsplash.com/photos/ntfGWVbBiO0/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjQ0OTI1Njkz&force=true"
+            title="Image title"
+          />
 
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {product.name}
-          </Typography>
-          <Typography>{product.description}</Typography>
-          <Typography>${product.price}</Typography>
-        </CardContent>
-        <CardActions>
-         
-         
-     
-         
-        </CardActions>
-     
-      </Link>
+          <CardContent className={classes.cardContent} >
+            <Typography gutterBottom variant="h5" component="h2">
+              {product.name}
+            </Typography>
+            <Typography>{product.description}</Typography>
+            <Typography>${product.price}</Typography>
+          </CardContent>
+          <CardActions></CardActions>
+        </Link>
       </Card>
     </Grid>
   );
@@ -98,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     flexGrow: 1,
-    color:"black", 
+    color: "black",
   },
   container: {
     paddingTop: "100px",
