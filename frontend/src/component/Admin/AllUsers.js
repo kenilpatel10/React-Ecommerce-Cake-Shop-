@@ -38,13 +38,13 @@ const [Users, setUsers] = useState([])
       {
         field: "name",
         headerName: "Name",
-        minWidth: 150,
+        minWidth: 100,
         flex: 1,
       },
       {
         field: "role",
         headerName: "Role",
-        minWidth: 150,
+        minWidth: 100,
         flex: 1,
       },
       {
@@ -57,7 +57,7 @@ const [Users, setUsers] = useState([])
         field: "actions",
         flex: 0.3,
         headerName: "Actions",
-        minWidth: 150,
+        minWidth: 60,
         type: "number",
         sortable: false,
         renderCell: (params) => {

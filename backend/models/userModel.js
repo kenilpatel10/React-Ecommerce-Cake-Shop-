@@ -14,12 +14,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "please enter your email"],
     unique: true,
-    // validate: [validator.isEmail, "please enter a valid email.."],
+    validate: [validator.isEmail, "please enter a valid email.."],
   },
   password: {
     type: String,
     required: [true, "please enter your name"],
-    minlength: [8, "name should have more than 8 characters"],
+    minlength: [8, "Password should have more than 8 characters"],
     select:false,
   },
   role: {
@@ -40,12 +40,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  product: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Product",
-    required: true,
-  },
- 
+
 
   resetPasswordToken: String,
   resetPasswordExpire: Date,

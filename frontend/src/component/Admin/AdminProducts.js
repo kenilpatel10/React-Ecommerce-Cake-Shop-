@@ -50,6 +50,7 @@ export default function AdminProducts() {
     window.confirm("are you sure");
     dispatch(deleteProduct(id));
   };
+  
   const columns = [
     { field: "id", headerName: "Product ID", minWidth: 150, flex: 0.5 },
 
@@ -76,6 +77,7 @@ export default function AdminProducts() {
       type: "number",
       sortable: false,
       renderCell: (params) => {
+        console.log(params)
         return (
           <>
             <Button

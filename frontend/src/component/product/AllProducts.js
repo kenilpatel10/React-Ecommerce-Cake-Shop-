@@ -55,7 +55,7 @@ const AllProducts = () => {
   const priceHandler = (event, value) => {
     setPrice(value);
   };
-  let count = resultPerPage / productCount;
+  let count = Math.round(resultPerPage / productCount + 1);
   const reload = () => {
     window.location.reload();
   };
@@ -164,10 +164,10 @@ const AllProducts = () => {
                   })}
               </Grid>
             )}
-            {resultPerPage < count ? (
+            {resultPerPage <  productCount ? (
               <Pagination
                 className={classes.page}
-                count={productCount}
+                count={count}
                 page={page}
                 onChange={(event, value) => {
                   setPage(value);
@@ -188,7 +188,7 @@ export default AllProducts;
 const useStyles = makeStyles((theme) => ({
   page: {
     padding: "20px",
-    marginLeft: "225px",
+    marginLeft: "425px",
   },
   slider: {
     width: "100px",

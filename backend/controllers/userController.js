@@ -31,13 +31,13 @@ exports.loginUser = catchAsyncError(async(req,res,next)=>{
 
     const {email,password} = req.body;
         if(!email || !password){
-            return next(new ErrorHandler("palese enter email & password",400))
+            return next(new ErrorHandler("please enter email & password",400))
         }
     const user =await User.findOne({email}).select("+password")
     if(!user){
         return next(new ErrorHandler("invalid email or password",400) )
     }
-    const isPasswordMatched =user.comparePassword(password);
+    const isPasswordMatched = await user.comparePassword(password);
 
     if(!isPasswordMatched){
         return next(new ErrorHandler("invalid email or password",401))

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/userAction";
 import { Backdrop } from "@material-ui/core";
 import CartIcon from "@mui/icons-material/ShoppingCart";
+import {ToastContainer, toast } from "react-toastify"
 
 export default function Shortcut({ user }) {
   const history = useNavigate();
@@ -50,9 +51,10 @@ export default function Shortcut({ user }) {
   }
   function logOutUser() {
     dispatch(logout());
-    alert.success("logout successfully");
+    toast.success("Logout Successfully");
     history("/");
   }
+  <ToastContainer/>
 
   const [open, setOpen] = React.useState(false);
 

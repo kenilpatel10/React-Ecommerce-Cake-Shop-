@@ -5,7 +5,6 @@ const ApiFeatures = require("../utils/apifeatures");
 const cloudinary = require("cloudinary")
 
 //create product---admin
-
 exports.createProduct = catchAsyncError(async (req, res, next) => {
   let images = [];
 
@@ -38,6 +37,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
     product,
   });
 });
+
 
 //get all products
 exports.getAllProducts = catchAsyncError(async (req, res) => {
@@ -117,6 +117,7 @@ exports.updateProduct = catchAsyncError(async (req, res, next) => {
 
 exports.deleteProduct = catchAsyncError( async (req, res, next) => {
   const product = await Product.findById(req.params.id);
+
   if (!product) {
     return res.status(500).json({
       success: false,

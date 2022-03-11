@@ -10,9 +10,11 @@ import Image1 from "../img/back1.jpg";
 import React from "react";
 
 import { Link } from "react-router-dom";
+;
 
 const Cards = ({ product }) => {
   const classes = useStyles();
+  console.log("mh",product)
   return (
     <Grid
       className={classes.cardGrid}
@@ -27,16 +29,15 @@ const Cards = ({ product }) => {
         <Link to={`/product/${product._id}`} style={{ textDecoration: "none" }}>
           <CardMedia
             className={classes.cardMedia}
-            image="https://unsplash.com/photos/ntfGWVbBiO0/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjQ0OTI1Njkz&force=true"
-            title="Image title"
-          />
+            image={product.images[0].url}
+            ></CardMedia>
 
           <CardContent className={classes.cardContent} >
             <Typography gutterBottom variant="h5" component="h2">
               {product.name}
             </Typography>
             <Typography>{product.description}</Typography>
-            <Typography>${product.price}</Typography>
+            <Typography>₹{product.price}</Typography>
           </CardContent>
           <CardActions></CardActions>
         </Link>

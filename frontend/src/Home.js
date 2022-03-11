@@ -14,7 +14,7 @@ import Logo from "../src/component/img/cakelogo3.png";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import CommonHeader from "./component/layout/Header";
-
+import {ToastContainer, toast } from "react-toastify"
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const Home = () => {
 
     dispatch(getProduct());
   }, [dispatch, error]);
-
+  <ToastContainer/> 
   const classes = useStyles();
   return (
     <>

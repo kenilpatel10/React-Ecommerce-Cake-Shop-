@@ -11,7 +11,7 @@ import {
 import { getAdminProduct } from "../../redux/actions/productAction";
 import AdminDrawer from "../Admin/AdminDrawer";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import CountUp from "react-countup";
 import CakeIcon from "@mui/icons-material/CakeTwoTone";
@@ -19,19 +19,21 @@ import OrderIcon from "@mui/icons-material/PlaylistAddCheckCircleTwoTone";
 import UsersIcon from "@mui/icons-material/PeopleAltTwoTone";
 import { adminOrders } from "../../redux/actions/orderAction";
 import Aos from "aos";
+import axios from "axios";
 import AdminChart from "./AdminChart";
 const DashBoard = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-
+const [Users, setUsers] = useState([])
   useEffect(() => {
     Aos.init({ duration: 1000 });
-
+  
     dispatch(getAdminProduct());
     dispatch(adminOrders());
+    axios.get("/api/v1/admin/users").then(res => {
+      setUsers(res.data.user) })
   }, [dispatch]);
   const { products } = useSelector((state) => state.products);
-  const { user } = useSelector((state) => state.user);
   const { orders } = useSelector((state) => state.myOrders);
 
   return (
@@ -69,7 +71,7 @@ const DashBoard = () => {
                     >
                       <CountUp
                         start={0}
-                        end={user && user.length}
+                        end={Users && Users.length}
                         duration={2.0}
                       />
                     </Typography>

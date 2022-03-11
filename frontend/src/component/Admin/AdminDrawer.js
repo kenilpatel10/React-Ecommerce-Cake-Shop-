@@ -22,6 +22,7 @@ import DashBoardIcon from '@mui/icons-material/Dashboard';
 import OrderIcon from '@mui/icons-material/LocalMall';
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240; 
 
@@ -122,6 +123,7 @@ export default function MiniDrawer() {
           <Typography variant="h6" noWrap component="div">
             DashBoard
           </Typography>
+       
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -184,7 +186,16 @@ export default function MiniDrawer() {
             </ListItemIcon>
             <ListItemText primary="Add Product" />
           </ListItem>
-   
+   </List>
+   <Divider />
+          <List>
+          
+          <ListItem button    component={Link} to="/">
+            <ListItemIcon>
+         <HomeIcon/>
+            </ListItemIcon>
+            <ListItemText primary="User Side" />
+          </ListItem>
       </List>
       </Drawer>
     </Box>

@@ -46,7 +46,6 @@ const categories = [
       alert.error(error);
       dispatch(clearErrors());
     }
-
     if (success) {
       alert.success("Product Created Successfully");
       history("/admin/dashboard");
@@ -54,13 +53,12 @@ const categories = [
     }
   }, [dispatch, alert, error, history, success]);
   const handleCreateProduct = (e) => {
-e.preventDefault();
+      e.preventDefault();
       const myForm = new FormData();
       myForm.set("name", name)
       myForm.set("price", price)
       myForm.set("description", description)
       myForm.set("category", category)
-
       images.forEach((image)=>{
           myForm.append("images", image)
       });
@@ -186,13 +184,10 @@ e.preventDefault();
               <input
                 type="file"
                 name="avatar"
-                accept="image/*"
+                accept="image/png, image/gif, image/jpeg"
                 onChange={imageChange}
                 multiple
               />
-     
-
-            
               {imagesPreview.map((image, index) => (
                 <img key={index} src={image} style={{height:"100px", width:"100px "}} alt="Product Preview" />
               ))}
@@ -229,7 +224,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "norepeat",
     backgroundSize: "cover",
   },
-
   text: {
     marginBottom: " 10px",
   },

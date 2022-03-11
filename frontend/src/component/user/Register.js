@@ -10,9 +10,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Image from "../img/mainlogo.png";
 import { register } from "../../redux/actions/userAction";
 import { useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
+
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function FormDialog() {
   const dispatch = useDispatch();
+  const alert= useAlert();
+  toast.configure();
   const [open, setOpen] = React.useState(false);
 
   const [user, setUser] = useState({
@@ -25,6 +31,8 @@ export default function FormDialog() {
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
   const registerSubmit = (e) => {
+
+
     e.preventDefault();
 
     const myForm = new FormData();
@@ -34,7 +42,13 @@ export default function FormDialog() {
     myForm.set("password", password);
     myForm.set("avatar", avatar);
     dispatch(register(myForm));
+    // alert.success("Registered Successfully")
+    toast.success("Register Successfully")
+    setOpen(false);
+   
   };
+  <ToastContainer/>
+
 
   const imageChange = (e) => {
     if (e.target.name === "avatar") {

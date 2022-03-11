@@ -18,6 +18,7 @@ import { UPDATE_PRODUCT_RESET } from "../../redux/constants/productConstatnts";
 import { clearErrors, updateProduct } from "../../redux/actions/productAction";
 import { useParams } from "react-router-dom";
 import Aos from "aos";
+import axios from "axios";
 const Shipping = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -48,13 +49,16 @@ const Shipping = () => {
   ];
   useEffect(() => {
     Aos.init({ duration: 1000 });
-    if (product) {
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(product.price);
-      setCategory(product.category);
-      setOldImages(product.images);
-    }
+    axios.get(`/api/v1/product/${productId.id}`).then(res=>{
+     
+        setName(res.data.product.name);
+        setDescription(res.data.product.description);
+        setPrice(res.data.product.price);
+        setCategory(res.data.product.category);
+        setOldImages(res.data.product.images);
+     
+    })
+   
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -69,6 +73,7 @@ const Shipping = () => {
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [dispatch, alert, error, updateError, history, isUpdated]);
+
   const handleUpdateProduct = (e) => {
     e.preventDefault();
     const myForm = new FormData();
@@ -80,7 +85,7 @@ const Shipping = () => {
     images.forEach((image) => {
       myForm.append("images", image);
     });
-    dispatch(updateProduct(productId, myForm));
+    dispatch(updateProduct(productId.id, myForm));
   };
 
   const imageChange = (e) => {
@@ -188,7 +193,7 @@ const Shipping = () => {
               </Select>
             </FormControl>
 
-            <div id="createProductFormFile">
+            <div>
               <input
                 type="file"
                 name="avatar"
@@ -198,7 +203,7 @@ const Shipping = () => {
               />
             </div>
 
-            <div id="createProductFormImage">
+            <div>
               {imagesPreview.map((image, index) => (
                 <img
                   key={index}
