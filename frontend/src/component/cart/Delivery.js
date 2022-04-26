@@ -12,27 +12,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../redux/actions/userAction";
 import { useAlert } from "react-alert";
 import { Link, useNavigate } from "react-router-dom";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
+import Stack from '@mui/material/Stack';
+
+
+
 export default function FormDialog() {
   const history = useNavigate();
+
+ 
 
   const { error, isAuthenticated} = useSelector((state) => state.user);
   const alert = useAlert();
 
   const dispatch = useDispatch();
-
-  const [loginEmail, setLoginEmail] = useState("");
   
-  const [loginPassword, setLoginPassword] = useState("");
- const token = localStorage.getItem("authToken")
-  const loginSubmit = (e) => {
+  const [dateTime, setDateTime] = useState("");
+
+
+  const CheckOut = (e) => {
     e.preventDefault();
-    dispatch(login(loginEmail, loginPassword));
-    localStorage.setItem('email',loginEmail)
-    console.log(localStorage.getItem("authToken"))
-   if(token !== 'null'){
-    alert.success("Successfully Logged In ");
-    console.log("nam",localStorage.getItem("authToken"))
-   }
+localStorage.setItem("date", value)
+    console.log(localStorage.getItem("date"))
+  history("/shipping")
   };
 
   useEffect(() => {
@@ -40,12 +44,6 @@ export default function FormDialog() {
       alert.error(error);
       // console.log("err",error)
       dispatch(clearErrors());
-    }
-
-    if (isAuthenticated) {
-      alert.success("Successfully Logged In ");
-      
-      history("/account");
     }
   }, [dispatch, error, alert, isAuthenticated, history]);
 
@@ -58,60 +56,54 @@ export default function FormDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+  const [value, setValue] = React.useState();
 
   return (
     <div>
       <strong variant="outlined" color="info" onClick={handleClickOpen}>
-        Log In
+   CheckOut
       </strong>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <DialogTitle color="text">
-            Log In
+          
             <img
               style={{
                 height: "200px",
                 marginBottom: "-110px",
-                marginLeft: "120px",
-                marginTop: "-100px",
+                marginLeft: "320px",
+                marginTop: "-180px",
                 width: "auto",
               }}
               src={Image}
               alt="."
             ></img>
           </DialogTitle>
+         <h3> Select Date and Time For Delivery</h3>
           <DialogContentText>
-            Please enter your email address and password here.
+             Make Sure You will get Your order after half an hour of ordered time
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            value={loginEmail}
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-            error={error}
-            onChange={(e) => {
-              setLoginEmail(e.target.value);
-            }}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Password"
-            type="password"
-            fullWidth
-            value={loginPassword}
-            variant="standard"
-            onChange={(e) => {
-              setLoginPassword(e.target.value);
-            }}
-          ></TextField>
-          <Link to="/forgot">Forgot password??</Link>
+          <p></p>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Stack spacing={3}>
+       
+        <MobileDateTimePicker
+          renderInput={(params) => <TextField {...params} />}
+          label="Select date and time"
+          value={value}
+          onChange={(newValue) => {
+            setValue(newValue);
+          }}
+            minDate={new Date()}
+          minTime={new Date(0, 0, 0, 11)}
+          maxTime={new Date(0, 0, 0, 23, 45)}
+        
+        />
+      </Stack>
+    </LocalizationProvider>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={loginSubmit}>Log In</Button>
+            <Button onClick={CheckOut}>Continue</Button>
           </DialogActions>
         </DialogContent>
       </Dialog>

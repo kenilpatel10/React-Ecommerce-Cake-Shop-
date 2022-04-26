@@ -216,12 +216,12 @@ const Shipping = () => {
           </Grid>
         </Grid>
         <Button
-          style={{ margin: "40px 290px" }}
+          style={{ margin: "40px 200px",width:"200px" }}
           onClick={handleUpdateProduct}
           variant="contained"
           color="warning"
         >
-          Add Product
+          Update Product
         </Button>
       </div>
     </div>

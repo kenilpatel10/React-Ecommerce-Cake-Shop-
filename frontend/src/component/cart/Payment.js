@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { clearErrors, createOrder } from "../../redux/actions/orderAction";
 import { useAlert } from "react-alert";
-
+import emailjs from "@emailjs/browser";
 const Payment = () => {
   const OrderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const history = useNavigate();
@@ -33,6 +33,10 @@ const Payment = () => {
   const paymentData = {
     amount: Math.round(OrderInfo.totalPrice * 100),
   };
+  var templateParams = {
+    email: localStorage.getItem('email')
+};
+ 
 
   const order = {
     shippingInfo,
@@ -41,6 +45,7 @@ const Payment = () => {
     taxPrice: OrderInfo.tax,
     shippingPrice: OrderInfo.shippingCharges,
     totalPrice: OrderInfo.totalPrice,
+    delivery: localStorage.getItem("date")
   };
 
   const submitHandler = async (e) => {
@@ -59,7 +64,7 @@ const Payment = () => {
         paymentData,
         config
       );
-
+    
       const client_secret = data.client_secret;
 
       if (!stripe || !elements) return;
@@ -84,7 +89,7 @@ const Payment = () => {
       if (result.error) {
         payBtn.current.disabled = false;
 
-        alert("false");
+      
       } else {
         if (result.paymentIntent.status === "succeeded") {
           order.paymentInfo = {
@@ -99,9 +104,15 @@ const Payment = () => {
           alert.error("There's some issue while processing payment ");
         }
       }
+        emailjs.send('service_js0ropa', 'template_sb05419', templateParams)
+      .then(function(response) {
+         console.log('SUCCESS!', response.status, response.text);
+      }, function(error) {
+         console.log('FAILED...', error);
+      });
     } catch (error) {
       payBtn.current.disabled = false;
-      alert.error("Error While Proccessing");
+      alert.error("Error While Proccessing Payment");
     }
   };
   const classes = useStyles();
@@ -118,7 +129,7 @@ const Payment = () => {
       <CheckOutStepper activeStep={2} />
       <div data-aos="fade-up" className={classes.grid}>
         <Typography className={classes.typography}>
-          Card Info{" "}
+          Card Info
           <Typography
             sx={{
               flexGrow: "1",

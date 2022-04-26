@@ -35,10 +35,10 @@ export default function AdminProducts() {
 
     if (isDeleted) {
       alert.success("Order Successfully Deleted");
-      history("/admin/dashboard");
       dispatch({ type: DELETE_ORDER_RESET });
     }
     dispatch(adminOrders());
+    console.log(orders)
   }, [dispatch, error, deleteError, isDeleted]);
 
   const deleteHandler = (id) => {

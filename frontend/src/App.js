@@ -30,6 +30,11 @@ import AllUsers from "./component/Admin/AllUsers";
 import AdminOrders from "./component/Admin/AdminOrders";
 import OrderDetails from "./component/order/OrderDetails";
 import AdminOrderDetails from "./component/Admin/AdminOrderDetails";
+import AboutUs from "./component/layout/AboutUs";
+import ContactUs from "./component/layout/ContactUs";
+import ForgotPassword from "./component/user/ForgotPassword";
+import ResetPassword from "./component/user/ResetPassword";
+import Delivery from "./component/cart/Delivery"
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -52,59 +57,64 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route path="/forgot" element={<ForgotPassword/>} />
+          <Route path="/password/reset/:token" element={<ResetPassword/>} />
+          <Route path="/aboutus" element={<AboutUs/>} />
+          <Route path="/contactus" element={<ContactUs/>} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/products" element={<AllProducts />} />
-          <Route path="/account" element={<Profile />} />
-          <Route path="/me/update" element={<UpdateProfile />} />
-          <Route path="/password/update" element={<UpdatePassword />} />
+          <Route path="/account"  element = {isAuthenticated ? <Profile / > : <Home />}/>
+          <Route path="/me/update" element={isAuthenticated ? <UpdateProfile /> : <Home/>} />
+          <Route path="/password/update" element={isAuthenticated ?<UpdatePassword /> : <Home/>} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/shipping" element={<Shipping />} />
-          <Route path="/order/confirm" element={<ConfirmOrder />} />
+          <Route path="/delivery" element = {isAuthenticated ? <Delivery/> : <Home />} />
+          <Route path="/shipping" element = {isAuthenticated ? <Shipping/> : <Home />} />
+          <Route path="/order/confirm"  element = {isAuthenticated ? <ConfirmOrder/>: <Home />}/>
 
-          <Route path="/success" element={<SuccessOrder />} />
+          <Route path="/success" element = {isAuthenticated ? <SuccessOrder/>: <Home />} />
 
           <Route
             path="/process/payment"
             element={
               <Elements stripe={loadStripe(stripeApiKey)}>
-                <Payment />
+             {isAuthenticated ? <Payment/>: <Home />}
               </Elements>
             }
           />
 
-          <Route path="/orders" element={<MyOrders />} />
-          <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/orders" element = {isAuthenticated ? <MyOrders/>: <Home />} />
+          <Route path="/order/:id" element = {isAuthenticated ? <OrderDetails/>: <Home />} />
 
           <Route
             path="/admin/dashboard"
             isAdmin={true}
-            element={<DashBoard />}
+            element = {isAuthenticated ? <DashBoard/>: <Home />}
           />
 
           <Route
             path="/admin/products"
             isAdmin={true}
-            element={<AdminProducts />}
+            element = {isAuthenticated ? <AdminProducts/>: <Home />}
           />
 
           <Route
             path="/admin/product"
             isAdmin={true}
-            element={<AddProduct />}
+            element = {isAuthenticated ? <AddProduct/>: <Home />}
           />
 
           <Route
             path="/admin/product/:id"
             isAdmin={true}
-            element={<UpdateProduct />}
+            element = {isAuthenticated ? <UpdateProduct/>: <Home />}
           />
-          <Route path="/admin/users" isAdmin={true} element={<AllUsers />} />
+          <Route path="/admin/users" isAdmin={true} element = {isAuthenticated ? <AllUsers/>: <Home />} />
           <Route
             path="/admin/orders"
             isAdmin={true}
-            element={<AdminOrders />}
+            element = {isAuthenticated ? <AdminOrders/>: <Home />}
           />
-           <Route path="/admin/order/:id"  isAdmin={true}  element={<AdminOrderDetails/>} />
+           <Route path="/admin/order/:id"  isAdmin={true}  element = {isAuthenticated ? <AdminOrderDetails/>: <Home />}/>
         </Routes>
       </Router>
     </>

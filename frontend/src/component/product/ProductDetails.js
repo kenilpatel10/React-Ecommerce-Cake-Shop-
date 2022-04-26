@@ -6,7 +6,7 @@ import { getProductDetails } from "../../redux/actions/productAction";
 import { useParams } from "react-router-dom";
 import Header from "../layout/Header";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { PRODUCT_DETAILS_RESET } from "../../redux/constants/productConstatnts";
 import { Grid, Button, Input } from "@mui/material";
 
 import { addItemsToCart } from "../../redux/actions/cartAction";
@@ -40,8 +40,17 @@ const ProductDetails = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+   
     Aos.init({ duration: 1000 });
-    dispatch(getProductDetails(product_Id.id));
+    console.log(product._id)
+    console.log("para",product_Id)
+   
+      dispatch(getProductDetails(product_Id.id));
+
+      dispatch({
+        type: PRODUCT_DETAILS_RESET,
+      });
+   
   }, [dispatch, product_Id]);
 
   const classes = useStyles();
@@ -111,7 +120,7 @@ const ProductDetails = () => {
                         </Button>
                       </div>
                       <Button
-                        style={{ margin: "0px 10px 10px  0px " }}
+                        style={{ margin: "0px 10px 10px  0px " ,backgroundColor:"tomato "}}
                         variant="contained"
                         color="warning"
                         onClick={handleAddToCart}

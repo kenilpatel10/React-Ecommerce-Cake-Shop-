@@ -14,10 +14,11 @@ import { loadUser, clearErrors } from "../../redux/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_RESET } from "../../redux/constants/userConstants";
 import { Typography } from "@mui/material";
+import { useAlert } from "react-alert";
 
 export default function UpdateProfile() {
   const { user } = useSelector((state) => state.user);
-  const { error, isUpdated } = useSelector((state) => state.profile);
+  const { error, isupdated } = useSelector((state) => state.profile);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +27,7 @@ export default function UpdateProfile() {
   const [open, setOpen] = React.useState(false);
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("");
-
+const alert= useAlert();
   const UpdateSubmit = (e) => {
     e.preventDefault();
 
@@ -36,6 +37,7 @@ export default function UpdateProfile() {
     myForm.set("email", email);
     myForm.set("avatar", avatar);
     dispatch(updateProfile(myForm));
+    setOpen(false)
   };
 
   const imageChange = (e) => {
@@ -67,21 +69,21 @@ export default function UpdateProfile() {
     }
 
     if (error) {
-      alert(error);
+      alert.error(error);
       dispatch(clearErrors());
     }
 
-    if (isUpdated) {
+    if (isupdated) {
       alert.success("Profile Updated Successfully");
       dispatch(loadUser());
-
-      history("/account");
 
       dispatch({
         type: UPDATE_RESET,
       });
+      history("/account");
+
     }
-  }, [dispatch, error, history, user, isUpdated]);
+  }, [dispatch, error, history, user, isupdated]);
 
   return (
     <div>

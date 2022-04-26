@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 
 const Cards = ({ product }) => {
   const classes = useStyles();
-  console.log("mh",product)
   return (
     <Grid
       className={classes.cardGrid}

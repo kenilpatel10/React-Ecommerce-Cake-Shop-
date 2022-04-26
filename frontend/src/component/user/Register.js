@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -9,9 +9,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Image from "../img/mainlogo.png";
 import { register } from "../../redux/actions/userAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,7 +19,7 @@ export default function FormDialog() {
   const alert= useAlert();
   toast.configure();
   const [open, setOpen] = React.useState(false);
-
+const {isAuthenticated} = useSelector(state => state.user)
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -42,25 +41,30 @@ export default function FormDialog() {
     myForm.set("password", password);
     myForm.set("avatar", avatar);
     dispatch(register(myForm));
-    // alert.success("Registered Successfully")
-    toast.success("Register Successfully")
+  
+  
     setOpen(false);
    
   };
-  <ToastContainer/>
+  useEffect(() => {
+    
+  if(localStorage.getItem('token')){
+    alert.success("Registerd Successfull")
+  }  
+  }, [])
+  
+  // <ToastContainer/>
 
 
   const imageChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
-
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
         }
       };
-
       reader.readAsDataURL(e.target.files[0]);
     }
   };

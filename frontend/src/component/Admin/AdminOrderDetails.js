@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { getOrderDetail, clearErrors} from "../../redux/actions/orderAction";
 import { Card, CardContent, CardMedia, Box } from "@mui/material";
 import Shortcut from "../layout/Shortcut";
+import AdminDrawer from "../Admin/AdminDrawer";
 const OrderDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const OrderDetails = () => {
   return (
     <div>
       {isAuthenticated && <Shortcut user={user} />}
+      <AdminDrawer/>
       <div className={classes.grid}>
         <Grid
           container

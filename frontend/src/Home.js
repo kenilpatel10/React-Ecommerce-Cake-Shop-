@@ -15,10 +15,11 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import CommonHeader from "./component/layout/Header";
 import {ToastContainer, toast } from "react-toastify"
+import { useAlert } from "react-alert";
 
 const Home = () => {
   const dispatch = useDispatch();
-
+const alert = useAlert();
   const { error, products} = useSelector(
     (state) => state.products
   );
@@ -65,6 +66,7 @@ const Home = () => {
                         href="#scroll"
                         variant="contained"
                         color="primary"
+                        style={{marginLeft: "210px"}}
                       >
                         Explore More
                       </Button>

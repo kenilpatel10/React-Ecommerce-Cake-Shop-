@@ -23,7 +23,7 @@ const ConfirmOrder = () => {
 
   const shippingCharges = subtotal > 1000 ? 0 : 200;
 
-  const tax =subtotal * 0.18;
+  const tax =subtotal * 0.05;
 
   const totalPrice = subtotal + tax + shippingCharges;
   const proceedToPayment = () => {
@@ -50,10 +50,15 @@ const ConfirmOrder = () => {
               <Grid item xs={8}>
                 <div>
                   <Typography>Details of Shipping </Typography>
-                  {/* <p> name:{user.name}</p> */}
                   <p> address:{address}</p>
                   <p>phone:{shippingInfo.phoneNumber}</p>
                 </div>
+                <div>
+                      <p></p>
+                      <hr /> <strong>Delivery time:</strong>{" "}
+                      <span>{localStorage.getItem("date").substring(0,21)}</span><br/>
+                      <span ><b>Note :-</b>(Delivery time will differ between 10 -20 min after or before exact delivery time)</span>
+                    </div>
                 <hr />
                 <div>
                   {" "}
@@ -152,6 +157,7 @@ const ConfirmOrder = () => {
                       <hr /> <strong>Total:</strong>{" "}
                       <span className={classes.span}>₹{totalPrice}</span>
                     </div>
+                 
                   </div>
 
                   <Button

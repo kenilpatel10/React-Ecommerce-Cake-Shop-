@@ -1,8 +1,9 @@
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
-
+const crypto = require('crypto')
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
+const sendEmail = require("../utils/sendEmail");
 const cloudinary = require("cloudinary")
 //Register user
 exports.registerUser =catchAsyncError(async(req,res,next)=>{
@@ -24,7 +25,7 @@ exports.registerUser =catchAsyncError(async(req,res,next)=>{
             url:myCloud.secure_url
         },
     })
-    sendToken(user,201,res)
+        
 })
 
 exports.loginUser = catchAsyncError(async(req,res,next)=>{
@@ -42,9 +43,11 @@ exports.loginUser = catchAsyncError(async(req,res,next)=>{
     if(!isPasswordMatched){
         return next(new ErrorHandler("invalid email or password",401))
     }
+
+
     sendToken(user,200,res)
 
-})
+})  
 
 exports.logout= catchAsyncError(async(req,res,next)=>{
 
@@ -124,7 +127,7 @@ exports.updateProfile = catchAsyncError(async(req,res,next)=>{
         
     }
 
-        if (req.body.avatar !== "") {
+        if (req.body.avatar !== "/Profile.png") {
             const user = await User.findById(req.user.id);
         
             const imageId = user.avatar.public_id;
@@ -185,3 +188,77 @@ exports.deleteUser = catchAsyncError(async(req,res,next)=>{
             success:true,
     })
 })
+
+exports.forgotPassword =  catchAsyncError(async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+  
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
+  
+    // Get ResetPassword Token
+    const resetToken = user.getResetPasswordToken();
+  
+    await user.save({ validateBeforeSave: false });
+  
+    const resetPasswordUrl = `http://localhost:3000/password/reset/${resetToken}`;
+  
+    const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
+  
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: `Cake Paradise Password Recovery`,
+        message,
+      });
+  
+      res.status(200).json({
+        success: true,
+        message: `Email sent to ${user.email} successfully`,
+      });
+    } catch (error) {
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+  
+      await user.save({ validateBeforeSave: false });
+  
+      return next(new ErrorHandler(error.message, 500));
+    }
+  });
+  
+  // Reset Password
+  exports.resetPassword =  catchAsyncError(async (req, res, next) => {
+    // creating token hash
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+  
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+  console.log(user)
+    if (!user) {
+      return next(
+        new ErrorHandler(
+          "Reset Password Token is invalid or has been expired",
+          400
+        )
+      );
+    }
+  
+    // if (req.body.password !== req.body.confirmPassword) {
+    //   return next(new ErrorHandler("Password does not match", 400));
+    // }
+  
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+  
+    await user.save();
+  
+    sendToken(user, 200, res);
+  });
+  

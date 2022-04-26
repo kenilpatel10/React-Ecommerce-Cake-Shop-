@@ -18,7 +18,7 @@ import "aos/dist/aos.css";
 import Loader2 from "../layout/Loader2";
 import { useLocation } from "react-router-dom";
 import { useAlert } from "react-alert";
-
+import { PRODUCT_DETAILS_RESET } from "../../redux/constants/productConstatnts";
 const categories = [
   "Anniversary",
   "Birthday",
@@ -45,17 +45,17 @@ const AllProducts = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    Aos.init({ duration: 1000 });
-    if (location.state) {
-      dispatch(getProduct(page, price, location.state, search));
-    }
+    Aos.init({ duration: 1000 });   
     dispatch(getProduct(page, price, category, search));
+    dispatch({
+      type: PRODUCT_DETAILS_RESET,
+    });
   }, [dispatch, page, price, category, search, error]);
 
   const priceHandler = (event, value) => {
     setPrice(value);
   };
-  let count = Math.round(resultPerPage / productCount + 1);
+  let count = Math.round(productCount / resultPerPage+ 1);
   const reload = () => {
     window.location.reload();
   };

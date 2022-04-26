@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { Button, Container, Input } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import Delivery from "./Delivery"
 import { Grid } from "@material-ui/core";
 import {
   addItemsToCart,
@@ -38,7 +39,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const increaseQuantity = (id, quantity) => {
     const newQty = quantity + 1;
-    if (quantity <= 5) {
+    if (quantity <= 3) {
       dispatch(addItemsToCart(id, newQty));
     }
   };
@@ -52,7 +53,7 @@ export default function Cart() {
 
   const checkOutCart = () => {
     if(isAuthenticated){
-      history("/shipping")
+      history("/delivery")
     }else{
       alert.error("Please Login to Continue")
       history("/")
@@ -170,7 +171,7 @@ export default function Cart() {
                             alignItems: "center",
                             pl: 1,
                             pb: 1,
-                            marginLeft: "100px",
+                            marginLeft: "30px",
                           }}
                         >
                           <Button
@@ -243,7 +244,7 @@ export default function Cart() {
                       )}`}
                     </Typography>
                     <Button
-                      onClick={checkOutCart}
+                      // onClick={checkOutCart}
                       style={{
                         margin: "20px",
                         backgroundColor: "tomato",
@@ -252,7 +253,8 @@ export default function Cart() {
                       variant="contained"
                       
                     >
-                      Check Out
+                     
+                      <Delivery/>
                     </Button>
                   </Box>
                 </Grid>

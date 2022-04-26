@@ -64,6 +64,7 @@ export default function Header() {
           <HomeDrawer />
           <img className={classes.logo} src={Logo1} alt="."></img>
 
+    
           <Box
             component="div"
             sx={{
@@ -80,11 +81,11 @@ export default function Header() {
               Products
             </Button>
 
-            <Button to="/" component={Link}>
+            <Button to="/contactus" component={Link}>
               <ContactIcon style={{ color: "black" }} /> Contact
             </Button>
 
-            <Button to="/" component={Link}>
+            <Button to="/aboutus" component={Link}>
               <AboutIcon style={{ color: "black" }} /> About
             </Button>
             <Button
@@ -121,7 +122,7 @@ export default function Header() {
             <Stack direction="row" spacing={2} onClick={handleClick}>
               <Avatar>
                 <UserIcon />
-                {/* <img src={user.avatar.url}  style={{height:"56px", width:"56px",borderRadius: "50%"}} alt='profile'/> */}
+               
               </Avatar>
             </Stack>
 
@@ -145,7 +146,7 @@ export default function Header() {
                 </div>
               ) : (
                 <div>
-                  <MenuItem>
+                  <MenuItem >
                     {" "}
                     <div>
                       <Login />

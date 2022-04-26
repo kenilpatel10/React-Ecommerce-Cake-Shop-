@@ -31,11 +31,13 @@ const Shipping = () => {
     e.preventDefault();
     if (phoneNumber.length > 10 || phoneNumber.length < 10) {
       alert("Phone number should be 10 numbers");
+    }else{
+      dispatch(
+        saveShippingInfo({ address, pinCode, country, city, state, phoneNumber })
+      );
+      history("/order/confirm");
     }
-    dispatch(
-      saveShippingInfo({ address, pinCode, country, city, state, phoneNumber })
-    );
-    history("/order/confirm");
+    
   };
 
   return (
@@ -107,7 +109,7 @@ const Shipping = () => {
               fullWidth
               margin="normal"
               label="Pin Code"
-              type="number"
+              type="number "
               inputProps={{
                 maxLength: 6,
               }}

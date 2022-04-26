@@ -16,7 +16,7 @@ const AllUsers = () => {
     const alert= useAlert();
     const {users}= useSelector(state => state.allUsers)
 const [Users, setUsers] = useState([])
-    console.log(users)
+ 
     useEffect(() => {
       Aos.init({duration:1000});
       axios.get("/api/v1/admin/users").then(res => {
@@ -24,13 +24,17 @@ const [Users, setUsers] = useState([])
  
      }, [dispatch])
      const deleteHandler = (id) => {
-      window.confirm("are you sure");
-    axios.delete(`/api/v1/admin/user/${id}`)
-    alert.success("User Deleted Successfully")
-    setTimeout(() => {
-      axios.get("/api/v1/admin/users").then(res => {
-        setUsers(res.data.user) })
-    }, 1000);
+      
+      if(window.confirm("are you sure")){
+
+        axios.delete(`/api/v1/admin/user/${id}`)
+        alert.success("User Deleted Successfully")
+        setTimeout(() => {
+          axios.get("/api/v1/admin/users").then(res => {
+            setUsers(res.data.user) })
+        }, 1000);
+      }
+  
     };
     const columns = [
       { field: "id", headerName: "User ID", minWidth: 150, flex: 0.5 },
@@ -61,14 +65,16 @@ const [Users, setUsers] = useState([])
         type: "number",
         sortable: false,
         renderCell: (params) => {
+          console.log(params)
           return (
             <>
-        
-            <Button
+            {params.row.role === 'admin' ? null :   <Button
                   onClick={() => deleteHandler(params.getValue(params.id, "id"))}
               >
                 <DeleteIcon />
-              </Button>
+              </Button>}
+         
+        
          
               
             </>

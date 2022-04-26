@@ -15,27 +15,22 @@ import { clearErrors } from "../../redux/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import { UPDATE_PASSWORD_RESET } from "../../redux/constants/userConstants";
 import { Typography } from "@mui/material";
-
+import { useAlert } from "react-alert";
 export default function UpdatePassword() {
-  const { error, isUpdated } = useSelector((state) => state.profile);
+  const { error1, isupdatedpassword } = useSelector((state) => state.profile);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+const alert = useAlert();
   const history = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
   const PasswordSubmit = (e) => {
     e.preventDefault();
+    dispatch(updatePassword({oldPassword,newPassword,confirmPassword}));
 
-    const myForm = new FormData();
-
-    myForm.set("oldpassword", oldPassword);
-    myForm.set("newpassword", newPassword);
-    myForm.set("confirmpassword", confirmPassword);
-    dispatch(updatePassword(myForm));
   };
 
   const handleClickOpen = () => {
@@ -46,21 +41,22 @@ export default function UpdatePassword() {
     setOpen(false);
   };
   useEffect(() => {
-    if (error) {
-      alert.error(error);
+    if (error1) {
+      alert.error(error1);
       dispatch(clearErrors());
     }
 
-    if (isUpdated) {
-      alert("Password Updated Successfully");
-
-      history("/account");
-
+    if (isupdatedpassword) {
+      alert.success("Password Updated Successfully");
+      setOpen(false);
       dispatch({
         type: UPDATE_PASSWORD_RESET,
       });
+      history("/account");
+
+     
     }
-  }, [dispatch, error, history, isUpdated]);
+  }, [dispatch, error1, history, isupdatedpassword]);
 
   return (
     <div>
