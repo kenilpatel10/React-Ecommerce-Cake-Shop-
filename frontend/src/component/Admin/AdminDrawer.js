@@ -23,7 +23,8 @@ import OrderIcon from '@mui/icons-material/LocalMall';
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-
+import CategoryIcon from '@mui/icons-material/Category';  
+import AllCatIcon from '@mui/icons-material/Ballot';
 const drawerWidth = 240; 
 
 
@@ -148,8 +149,8 @@ export default function MiniDrawer() {
               <ListItemText primary="DashBoard" />
             </ListItem>
      
-        </List>
-        <List>
+      
+      
           
           <ListItem button   component={Link} to="/admin/orders">
             <ListItemIcon>
@@ -159,7 +160,8 @@ export default function MiniDrawer() {
             <ListItemText primary="Orders" />
           </ListItem>
    
-      </List>  <List>
+      
+    
           
           <ListItem button component={Link} to="/admin/users" >
             <ListItemIcon>
@@ -168,9 +170,14 @@ export default function MiniDrawer() {
             <ListItemText primary="Users" />
           </ListItem>
    
-      </List>
-      <List>
-          
+    
+    
+          <ListItem button component={Link} to="/admin/categories" >
+            <ListItemIcon>
+             <AllCatIcon/>
+            </ListItemIcon>
+            <ListItemText primary="All Categories" />
+          </ListItem>
           <ListItem button  component={Link} to="/admin/products" >
             <ListItemIcon>
             <ProductIcon/>
@@ -178,7 +185,8 @@ export default function MiniDrawer() {
             <ListItemText primary="All Products" />
           </ListItem>
    
-      </List><List>
+    
+    
           
           <ListItem button    component={Link} to="/admin/product">
             <ListItemIcon>
@@ -186,9 +194,15 @@ export default function MiniDrawer() {
             </ListItemIcon>
             <ListItemText primary="Add Product" />
           </ListItem>
-   </List>
+          <ListItem button    component={Link} to="/admin/category">
+            <ListItemIcon>
+         <CategoryIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Add Category" />
+          </ListItem>
+ 
    <Divider />
-          <List>
+        
           
           <ListItem button    component={Link} to="/">
             <ListItemIcon>

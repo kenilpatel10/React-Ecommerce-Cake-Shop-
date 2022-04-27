@@ -35,6 +35,8 @@ import ContactUs from "./component/layout/ContactUs";
 import ForgotPassword from "./component/user/ForgotPassword";
 import ResetPassword from "./component/user/ResetPassword";
 import Delivery from "./component/cart/Delivery"
+import AddCategory from "./component/Admin/AddCategory";
+import AllCategories from "./component/Admin/AllCategories";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
 
@@ -113,6 +115,16 @@ function App() {
             path="/admin/orders"
             isAdmin={true}
             element = {isAuthenticated ? <AdminOrders/>: <Home />}
+          />
+               <Route
+            path="/admin/category"
+            isAdmin={true}
+            element = {isAuthenticated ? <AddCategory/>: <Home />}
+          />
+                 <Route
+            path="/admin/categories"
+            isAdmin={true}
+            element = {isAuthenticated ? <AllCategories/>: <Home />}
           />
            <Route path="/admin/order/:id"  isAdmin={true}  element = {isAuthenticated ? <AdminOrderDetails/>: <Home />}/>
         </Routes>

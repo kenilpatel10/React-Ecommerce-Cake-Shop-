@@ -21,12 +21,13 @@ const user =require("./routes/userRoute")
 const order =require("./routes/orderRoute")
 const errorMiddleware = require("../backend/middleware/error")
 const payment =require("./routes/paymentRoute")
-
+const category = require("./routes/CategoryRoute");
 
 app.use("/api/v1", product)
 app.use("/api/v1", user)
 app.use("/api/v1", order)
 app.use("/api/v1", payment)
+app.use("/api/v1", category)
 // Middleware for Error
 
 app.use(errorMiddleware)

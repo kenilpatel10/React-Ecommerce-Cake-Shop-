@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
       required: true,   
     },
   },
+  phone:{
+    type: Number,
+    required: true, 
+  },
   createdAt:{
     type: Date,
     default: Date.now,

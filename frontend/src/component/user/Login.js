@@ -20,19 +20,59 @@ export default function FormDialog() {
 
   const dispatch = useDispatch();
 
-  const [loginEmail, setLoginEmail] = useState("");
-  
-  const [loginPassword, setLoginPassword] = useState("");
+
+  const [form, setForm] = useState({
+    email:"",
+    password:"",
+  })
+  const [errors, setErrors] = useState({})
+
+  const setField =(field, value)=>{
+    setForm({
+      ...form,
+      [field]: value
+    })
+    if(!!errors[field])
+    setErrors({
+      ...errors,
+      [field]: null
+    })
+  }
+  const validateForm=()=>{
+    const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const{email, password}= form;
+const newErrors={}
+
+if(!email || email=== ''){
+  newErrors.email = 'Please Enter Email Address'
+}
+if( email && regex.test(form.email) === false){
+  newErrors.email ="Invalid Email Address"
+}
+
+if(!password || password === ''){
+  newErrors.password = 'Please Enter Password'
+}
+return newErrors;
+  }
  const token = localStorage.getItem("authToken")
   const loginSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(loginEmail, loginPassword));
-    localStorage.setItem('email',loginEmail)
+    const fromErrors= validateForm()
+
+    if(Object.keys(fromErrors).length > 0){
+      setErrors(fromErrors)
+      console.log(errors)
+    }else{
+
+    dispatch(login(form));
+    localStorage.setItem('email',form.email)
     console.log(localStorage.getItem("authToken"))
    if(token !== 'null'){
     alert.success("Successfully Logged In ");
     console.log("nam",localStorage.getItem("authToken"))
    }
+  }
   };
 
   useEffect(() => {
@@ -86,15 +126,15 @@ export default function FormDialog() {
           <TextField
             autoFocus
             margin="dense"
-            value={loginEmail}
+  
             label="Email Address"
             type="email"
             fullWidth
             variant="standard"
-            error={error}
-            onChange={(e) => {
-              setLoginEmail(e.target.value);
-            }}
+            value={form.email} 
+            onChange={e => setField ('email',e.target.value)}
+             error={errors.email}
+             helperText={errors.email}
           />
           <TextField
             autoFocus
@@ -102,11 +142,11 @@ export default function FormDialog() {
             label="Password"
             type="password"
             fullWidth
-            value={loginPassword}
-            variant="standard"
-            onChange={(e) => {
-              setLoginPassword(e.target.value);
-            }}
+           variant="standard"
+            value={form.password} 
+            onChange={e => setField ('password',e.target.value)}
+             error={errors.password}
+             helperText={errors.pass}
           ></TextField>
           <Link to="/forgot">Forgot password??</Link>
           <DialogActions>

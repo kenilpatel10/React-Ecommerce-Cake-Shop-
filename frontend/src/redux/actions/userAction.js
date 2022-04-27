@@ -29,7 +29,7 @@ import {
 } from "../constants/userConstants";
 import axios from "axios";
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (form) => async (dispatch) => {
   try {
 
     dispatch({ type: LOGIN_REQUEST });
@@ -37,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
       `/api/v1/login`,
-      { email, password },
+      form ,
       config
     );
     if (data.token) {

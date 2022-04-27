@@ -24,38 +24,78 @@ const {isAuthenticated} = useSelector(state => state.user)
     name: "",
     email: "",
     password: "",
+    phone: ""
   });
-  const { name, email, password } = user;
+  const { name, email, password, phone} = user;
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
-
-  const registerSubmit = (e) => {
-
-
-    e.preventDefault();
-
-    const myForm = new FormData();
-
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("avatar", avatar);
-    dispatch(register(myForm));
-  
-  
-    setOpen(false);
-   
-  };
+  const [errors, setErrors] = useState({})
+ 
   useEffect(() => {
     
   if(localStorage.getItem('token')){
     alert.success("Registerd Successfull")
   }  
   }, [])
-  
+  const setField =(field, value)=>{
+    setUser({
+      ...user,
+      [field]: value
+    })
+    if(!!errors[field])
+    setErrors({
+      ...errors,
+      [field]: null
+    })
+  }
+
   // <ToastContainer/>
+  const validateForm=()=>{
+    const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const{email, password, name, phone}= user;
+    const newErrors={}
+    
+    if(!email || email=== ''){
+      newErrors.email = 'Please Enter Email Address'
+    }
+    if( email && regex.test(user.email) === false){
+      newErrors.email ="Invalid Email Address"
+    }
+    if(!phone || phone=== ''){
+      newErrors.phone = 'Please Enter Phone Number'
+    }
+    if(!name || name === ''){
+      newErrors.name = 'Please Enter Username'
+    }
+    
+    if(!password || password === ''){
+      newErrors.password = 'Please Enter Password'
+    }
+    return newErrors;
+      }
+ const registerSubmit = (e) => {
 
 
+    e.preventDefault();
+    const fromErrors= validateForm()
+
+    if(Object.keys(fromErrors).length > 0){
+      setErrors(fromErrors)
+      console.log(errors)
+    }else{
+    const myForm = new FormData();
+
+    myForm.set("name", name);
+    myForm.set("email", email);
+    myForm.set("password", password);
+    myForm.set("phone", phone)
+    myForm.set("avatar", avatar);
+    dispatch(register(myForm));
+  
+  
+    setOpen(false);
+    }
+  };  
   const imageChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
@@ -109,11 +149,12 @@ const {isAuthenticated} = useSelector(state => state.user)
               value={user.name}
               type="text"
               fullWidth
-              onChange={(e) => {
-                setUser({ ...user, name: e.target.value });
-              }}
+              onChange={(e) => { setField ('name',e.target.value)}}
+                error={errors.name}
+                helperText={errors.name}
               variant="standard"
             />
+
             <TextField
               autoFocus
               margin="dense"
@@ -121,9 +162,9 @@ const {isAuthenticated} = useSelector(state => state.user)
               type="email"
               value={user.email}
               fullWidth
-              onChange={(e) => {
-                setUser({ ...user, email: e.target.value });
-              }}
+               onChange={(e) => { setField ('email',e.target.value)}}
+                error={errors.email}
+                helperText={errors.email}
               variant="standard"
             />{" "}
             <TextField
@@ -132,12 +173,24 @@ const {isAuthenticated} = useSelector(state => state.user)
               label="Password"
               value={user.password}
               type="password"
-              onChange={(e) => {
-                setUser({ ...user, password: e.target.value });
-              }}
+              onChange={(e) => { setField ('password',e.target.value)}}
+                error={errors.password}
+                helperText={errors.password}
               fullWidth
               variant="standard"
             />{" "}
+             <TextField
+              autoFocus
+              margin="dense"
+              label="Phone Number"
+              value={user.phone}
+              type="text"
+              fullWidth
+              onChange={(e) => { setField ('phone',e.target.value)}}
+                error={errors.phone}
+                helperText={errors.phone}
+              variant="standard"
+            />
             {/* <TextField
             autoFocus
             margin="dense"
