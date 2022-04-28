@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';  
 import AllCatIcon from '@mui/icons-material/Ballot';
+import { Tooltip } from "@mui/material";
 const drawerWidth = 240; 
 
 
@@ -142,8 +143,10 @@ export default function MiniDrawer() {
           
             <ListItem button component={Link}  to="/admin/dashboard" >
               <ListItemIcon >
-             
+              <Tooltip title="Dashboard"  placement="right">
               <DashBoardIcon/>
+</Tooltip>
+            
               </ListItemIcon>
              
               <ListItemText primary="DashBoard" />
@@ -154,7 +157,10 @@ export default function MiniDrawer() {
           
           <ListItem button   component={Link} to="/admin/orders">
             <ListItemIcon>
-         <OrderIcon/> 
+            <Tooltip title="All Orders"  placement="right">
+            <OrderIcon/> 
+</Tooltip>
+
             </ListItemIcon>
            
             <ListItemText primary="Orders" />
@@ -165,7 +171,9 @@ export default function MiniDrawer() {
           
           <ListItem button component={Link} to="/admin/users" >
             <ListItemIcon>
+            <Tooltip title="All Users"  placement="right">
              <UserIcon/>
+             </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
@@ -174,13 +182,17 @@ export default function MiniDrawer() {
     
           <ListItem button component={Link} to="/admin/categories" >
             <ListItemIcon>
+            <Tooltip title="All Categories"  placement="right">
              <AllCatIcon/>
+             </Tooltip>
             </ListItemIcon>
             <ListItemText primary="All Categories" />
           </ListItem>
           <ListItem button  component={Link} to="/admin/products" >
             <ListItemIcon>
+            <Tooltip title="All Products"  placement="right">
             <ProductIcon/>
+            </Tooltip>
             </ListItemIcon>
             <ListItemText primary="All Products" />
           </ListItem>
@@ -190,13 +202,17 @@ export default function MiniDrawer() {
           
           <ListItem button    component={Link} to="/admin/product">
             <ListItemIcon>
+            <Tooltip title="Add Product"  placement="right">
          <AddIcon/>
+         </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Add Product" />
           </ListItem>
           <ListItem button    component={Link} to="/admin/category">
             <ListItemIcon>
+            <Tooltip title="Add Category"  placement="right">
          <CategoryIcon/>
+         </Tooltip>
             </ListItemIcon>
             <ListItemText primary="Add Category" />
           </ListItem>
@@ -206,7 +222,9 @@ export default function MiniDrawer() {
           
           <ListItem button    component={Link} to="/">
             <ListItemIcon>
+            <Tooltip title="User Side"  placement="right">
          <HomeIcon/>
+         </Tooltip>
             </ListItemIcon>
             <ListItemText primary="User Side" />
           </ListItem>

@@ -155,8 +155,7 @@ const Payment = () => {
           ref={payBtn}
           variant="contained"
           color="warning"
-          onClick={submitHandler}
-        >
+          onClick={submitHandler}>
           {`Pay - ₹${OrderInfo && OrderInfo.totalPrice}`}
         </Button>
       </div>
@@ -174,13 +173,12 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "-135px",
       width: "auto",
     },
-
-    height: "200px",
-    padding: "10px",
-    marginBottom: "-110px",
-    marginLeft: "80px",
-    marginTop: "-130px",
-    width: "auto",
+      height: "200px",
+      padding: "10px",
+      marginBottom: "-80px",
+      marginLeft: "50px",
+      marginTop: "-130px",
+      width: "auto",
   },
   typography: {
     margin: "10px",
@@ -217,7 +215,7 @@ const useStyles = makeStyles((theme) => ({
   paymentInput: {
     padding: "1vmax 4vmax",
     paddingRight: "1vmax",
-    width: "80%",
+    width: "100%",
     boxSizing: "borderBox",
     border: "1px solid rgba(0, 0, 0, 0.267)",
     borderRadius: "4px",

@@ -72,14 +72,14 @@ localStorage.setItem("date", value)
                 height: "200px",
                 marginBottom: "-110px",
                 marginLeft: "320px",
-                marginTop: "-180px",
+                marginTop: "-100px",
                 width: "auto",
               }}
               src={Image}
               alt="."
             ></img>
           </DialogTitle>
-         <h3> Select Date and Time For Delivery</h3>
+         <h5> Select Date and Time For Delivery</h5>
           <DialogContentText>
              Make Sure You will get Your order after half an hour of ordered time
           </DialogContentText>

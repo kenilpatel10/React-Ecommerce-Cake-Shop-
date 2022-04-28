@@ -36,7 +36,7 @@ const OrderDetails = () => {
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
           <Grid item xs={0} md={6} lg={8} className={classes.grid1}>
-            <h1>Ordered Items</h1>
+            <h3>Ordered Items</h3>
             {order.orderItems &&
               order.orderItems.map((cake) => {
                 return (
@@ -214,8 +214,8 @@ const useStyles = makeStyles((theme) => ({
       padding: "50px",
       height: "auto",
       width: "auto",
-      marginLeft: "0px",
-      marginTop: "0px",
+      marginLeft: "50px",
+      marginTop: "20px",
       borderRadius: "30px",
     },
   },

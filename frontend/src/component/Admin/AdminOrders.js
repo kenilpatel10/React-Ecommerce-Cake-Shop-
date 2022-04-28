@@ -1,9 +1,5 @@
 import * as React from "react";
 import { useEffect } from "react";
-import Card from "@mui/material/Card";
-import { useState } from "react";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { Container } from "@material-ui/core";
@@ -11,44 +7,24 @@ import { useDispatch } from "react-redux";
 import AdminDrawer from "../Admin/AdminDrawer";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import ViewIcon from '@mui/icons-material/Visibility';
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/ModeEditTwoTone";
 import DeleteIcon from "@mui/icons-material/DeleteTwoTone";
-import FormControl from "@mui/material/FormControl";
 import { DELETE_ORDER_RESET } from "../../redux/constants/orderConstants";
 import { useAlert } from "react-alert";
-import { adminOrders } from "../../redux/actions/orderAction";
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Select from '@mui/material/Select';
+import { adminOrders, updateOrder } from "../../redux/actions/orderAction";
 import { deleteOrder, clearErrors } from "../../redux/actions/orderAction";
-import axios from "axios"
 import Aos from "aos";
-
+import Swal from "sweetalert2";
+import ViewIcon from '@mui/icons-material/Visibility';
 export default function AdminProducts() {
   const dispatch = useDispatch();
-
+  const history = useNavigate();
   const alert = useAlert();
 
-const [Orders, setOrders] = useState()
   const { error, orders } = useSelector((state) => state.myOrders);
   const { error: deleteError, isDeleted } = useSelector((state) => state.order);
-  const [toggle, setToggle] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-
-
- 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-   
-      setOpen(false);
-   
-  };
-
-
   useEffect(() => {
     Aos.init({ duration: 1000 });
     if (error) {
@@ -61,114 +37,166 @@ const [Orders, setOrders] = useState()
     }
 
     if (isDeleted) {
-      alert.success("Order Successfully Deleted");
+      
       dispatch({ type: DELETE_ORDER_RESET });
     }
-    axios.get("/api/v1/admin/orders").then(res => 
-    setOrders(res.data.orders))
-    console.log("00000",Orders)
+    dispatch(adminOrders());
+    console.log(orders)
   }, [dispatch, error, deleteError, isDeleted]);
 
-  const deleteHandler = (id) => {
-   if( window.confirm("are you sure")){
-    dispatch(deleteOrder(id));
+  const [Status, setStatus] = useState( {
+    orderStatus:""
+   });
 
-   }
-  };
-  const [Status, setStatus] = React.useState('');
+  const onEdit =(id)=>{
+    // setToggle(true)
 
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
-
-  const onEdit =()=>{
-    setToggle(true)
+      Swal.fire({
+        title: 'Select Order Status',
+  input: 'select',
+  inputOptions: {
+   Proccessing: 'Proccessing',
+      Delivered: ' Delivered',
+  },
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Update Status'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Updated!',
+            ( ' Order status has been updated.'),
+            'success'
+          )
+      
+          console.log("rree",result.value)
+          const  status1 =result.value
+          setStatus({orderStatus:status1})
+         
+    
+         
+         console.log("daS",Status)
+          const fd = new FormData;
+          fd.append("orderStatus",Status.orderStatus)
+          dispatch(updateOrder(id,fd))
+          // console.log("daS",Status.Delivered)
+          console.log(id)
+        
+        }
+      })
   }
-  
 
+  const deleteHandler = (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your order has been deleted.',
+          'success'
+        )
+      }
+      dispatch(deleteOrder(id));  
+    })
+     
+
+
+  };
+  const columns = [
  
+    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.5 },
+
+    {
+      field: "status",
+      headerName: "Status",
+      minWidth: 100,
+      flex: 1,
+    },
+    {
+      field: "total",
+      headerName: "Total",
+      minWidth: 100,
+      flex: 1,
+    },
+    {
+      field: "payment",
+      headerName: "Payment",
+      minWidth: 100,
+      flex: 1,
+    },
+
+
+    {
+      field: "actions",
+      flex: 0.3,
+      headerName: "Actions",
+      minWidth: 200,
+      type: "number",
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              component={Link}
+              to={`/admin/order/${params.getValue(params.id, "id")}`}
+            >
+              <ViewIcon />
+            </Button>
+            <Button onClick={()=> onEdit(params.id)}>
+            <EditIcon />
+            </Button>
+            <Button
+              onClick={() => deleteHandler(params.getValue(params.id, "id"))}
+             >
+              <DeleteIcon />
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+
+  const rows = [];
+
+  orders &&
+    orders.forEach((i) => {
+      rows.push({
+        id: i._id,
+        status: i.orderStatus,
+        total: i.totalPrice,
+        payment:i.paymentInfo.status,
+        name: i.user.name,  
+      });
+    });
 
   return (
     <Container>
       <AdminDrawer />
       <div data-aos="fade-up" style={{ padding: "80px" }}>
-     
-        {Orders &&( Orders.reverse()).map((x)=>{
-          return(
-<>
-<Card 
-  sx={{
-    display: "flex",
-    borderRadius: "10px",
-    margin: "10px",
-    padding:"5px",
-    boxShadow:
-      "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
-  }}
- >
-
-        <CardContent sx={{ flex: "1 0 auto" }}>
-
-    {
-      toggle === false ? 
-    <>
-      <Typography
-      variant="subtitle1"
-      color="text.secondary"
-      component="div"
-    >
-{x.orderStatus}
-    </Typography> 
-     <ViewIcon onClick={onEdit}/>
-    </>
-    :
-  <FormControl sx={{ m: 1, minWidth: 120 }}>
-  <InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
-  <Select
-    native
-    value={Status}
-    onChange={handleChange}
-    input={<OutlinedInput label="Age" id="demo-dialog-native" />}
-  >
-   
-    <option value={10}>Proccessing</option>
-    <option value={20}>Delivered</option>
-
-  </Select>
-</FormControl>
-    }
-   
-  
-    <Typography
-      variant="subtitle1"
-      color="text.secondary"
-      component="div"
-    >
- 
-    </Typography>
-    <Button
-component={Link}
-to={`/admin/order/${x._id}`}
->
-<ViewIcon />
-</Button>
-<Button
-onClick={() => deleteHandler(x._id)}
->
-<DeleteIcon />
-</Button>
-  </CardContent>
-</Card>
-</>
-)
-
-
-
-
-
-        })}
-    
-   
+        <DataGrid
+          style={{
+            padding: "50px",
+            backgroundColor: "white",
+            height: "500px",
+            width: "1000px",
+            marginLeft: "30px",
+            borderRadius: "30px",
+            boxShadow:
+              "rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
+          }}
+          rows={rows}
+          columns={columns}
+          pageSize={7}
+          rowsPerPageOptions={[5]}
+        />
       </div>
     </Container>
   );

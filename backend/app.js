@@ -19,7 +19,7 @@ dotenv.config({path: "backend/config/config.env"})
 const product =require("./routes/productRoute")
 const user =require("./routes/userRoute")
 const order =require("./routes/orderRoute")
-const errorMiddleware = require("../backend/middleware/error")
+const errorMiddleware = require("./middleware/error")
 const payment =require("./routes/paymentRoute")
 const category = require("./routes/CategoryRoute");
 
