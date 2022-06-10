@@ -44,9 +44,7 @@ export default function AdminProducts() {
     console.log(orders)
   }, [dispatch, error, deleteError, isDeleted]);
 
-  const [Status, setStatus] = useState( {
-    orderStatus:""
-   });
+  const [Status, setStatus] = useState('');
 
   const onEdit =(id)=>{
     // setToggle(true)
@@ -72,13 +70,19 @@ export default function AdminProducts() {
       
           console.log("rree",result.value)
           const  status1 =result.value
-          setStatus({orderStatus:status1})
+          console.log('status1',status1)
+          if(status1){
+            console.log('hello')
+            setStatus(status1)
+          }
+          // setStatus(status1)
          
     
          
          console.log("daS",Status)
           const fd = new FormData;
-          fd.append("orderStatus",Status.orderStatus)
+          fd.append("orderStatus",status1)
+          console.log('fd',fd)
           dispatch(updateOrder(id,fd))
           // console.log("daS",Status.Delivered)
           console.log(id)

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 export default function FormDialog() {
   const dispatch = useDispatch();
@@ -20,6 +21,16 @@ export default function FormDialog() {
   toast.configure();
   const [open, setOpen] = React.useState(false);
 const {isAuthenticated} = useSelector(state => state.user)
+
+const [passwordShown, setPasswordShown] = useState(false);
+
+// Password toggle handler
+const togglePassword = () => {
+  // When the handler is invoked
+  // inverse the boolean state of passwordShown
+  setPasswordShown(!passwordShown);
+};
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -33,9 +44,7 @@ const {isAuthenticated} = useSelector(state => state.user)
  
   useEffect(() => {
     
-  if(localStorage.getItem('token')){
-    alert.success("Registerd Successfull")
-  }  
+   
   }, [])
   const setField =(field, value)=>{
     setUser({
@@ -172,13 +181,14 @@ const {isAuthenticated} = useSelector(state => state.user)
               margin="dense"
               label="Password"
               value={user.password}
-              type="password"
+              type={passwordShown ? "text" : "password"}
               onChange={(e) => { setField ('password',e.target.value)}}
                 error={errors.password}
                 helperText={errors.password}
               fullWidth
               variant="standard"
             />{" "}
+              <FormControlLabel control={<Checkbox onClick={togglePassword}/>} label="Show Password" />
              <TextField
               autoFocus
               margin="dense"
@@ -191,6 +201,7 @@ const {isAuthenticated} = useSelector(state => state.user)
                 helperText={errors.phone}
               variant="standard"
             />
+          
             {/* <TextField
             autoFocus
             margin="dense"

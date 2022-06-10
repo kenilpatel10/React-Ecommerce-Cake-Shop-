@@ -49,9 +49,9 @@ const ConfirmOrder = () => {
             <Grid data-aos="fade-up" container spacing={2}>
               <Grid item xs={8}>
                 <div>
-                  <Typography>Details of Shipping </Typography>
-                  <p> address:{address}</p>
-                  <p>phone:{shippingInfo.phoneNumber}</p>
+                  <Typography><b>Details of Shipping </b></Typography>
+                  <p> <b>Address:</b>{address}</p>
+                  <p><b>Phone:</b>{shippingInfo.phoneNumber}</p>
                 </div>
                 <div>
                       <p></p>

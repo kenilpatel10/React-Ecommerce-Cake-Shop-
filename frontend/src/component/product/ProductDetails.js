@@ -42,7 +42,7 @@ const ProductDetails = () => {
   useEffect(() => {
    
     Aos.init({ duration: 1000 });
-    console.log(product._id)
+    console.log("pId",product._id)
     console.log("para",product_Id)
    
       dispatch(getProductDetails(product_Id.id));
@@ -56,7 +56,8 @@ const ProductDetails = () => {
   const classes = useStyles();
   return (
     <Fragment>
-      {loading ? (
+{console.log("iiiiiiiiiiiii",product._id)}
+      {loading && product_Id !== product._id ? (
         <Loader2 />
       ) : (
         <div className={classes.heroContent}>

@@ -16,6 +16,7 @@ const OrderDetails = () => {
   const orderId = useParams();
   useEffect(() => {
     dispatch(getOrderDetail(orderId.id));
+    
   }, [dispatch, orderId]);
 
   return (

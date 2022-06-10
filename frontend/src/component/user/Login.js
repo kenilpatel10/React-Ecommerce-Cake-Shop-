@@ -12,6 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../redux/actions/userAction";
 import { useAlert } from "react-alert";
 import { Link, useNavigate } from "react-router-dom";
+import EyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Checkbox, FormControlLabel, InputAdornment, InputLabel } from "@mui/material";
+import { IconButton } from "@mui/material";
+import { Input } from "@material-ui/core";
 export default function FormDialog() {
   const history = useNavigate();
 
@@ -20,10 +24,19 @@ export default function FormDialog() {
 
   const dispatch = useDispatch();
 
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // inverse the boolean state of passwordShown
+    setPasswordShown(!passwordShown);
+  };
 
   const [form, setForm] = useState({
     email:"",
     password:"",
+    phone:""
   })
   const [errors, setErrors] = useState({})
 
@@ -51,7 +64,7 @@ if( email && regex.test(form.email) === false){
 }
 
 if(!password || password === ''){
-  newErrors.password = 'Please Enter Password'
+  newErrors.password = 'Password Should be more than 8 character'
 }
 return newErrors;
   }
@@ -77,8 +90,6 @@ return newErrors;
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
-      // console.log("err",error)
       dispatch(clearErrors());
     }
 
@@ -136,18 +147,22 @@ return newErrors;
              error={errors.email}
              helperText={errors.email}
           />
+
           <TextField
             autoFocus
             margin="dense"
             label="Password"
-            type="password"
+            type={passwordShown ? "text" : "password"}
             fullWidth
            variant="standard"
             value={form.password} 
             onChange={e => setField ('password',e.target.value)}
              error={errors.password}
-             helperText={errors.pass}
+             helperText={errors.password}
+          
           ></TextField>
+           <FormControlLabel control={<Checkbox onClick={togglePassword}/>} label="Show Password" />
+           <br/>
           <Link to="/forgot">Forgot password??</Link>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>

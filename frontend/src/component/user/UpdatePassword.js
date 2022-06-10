@@ -7,7 +7,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
 import Image from "../img/mainlogo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "../../redux/actions/userAction";
@@ -18,7 +17,6 @@ import { Typography } from "@mui/material";
 import { useAlert } from "react-alert";
 export default function UpdatePassword() {
   const { error1, isupdatedpassword } = useSelector((state) => state.profile);
-
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,12 +24,46 @@ const alert = useAlert();
   const history = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-
   const PasswordSubmit = (e) => {
     e.preventDefault();
     dispatch(updatePassword({oldPassword,newPassword,confirmPassword}));
-
   };
+
+  const [form, setForm] = useState({
+    email:"",
+    password:"",
+  })
+  const [errors, setErrors] = useState({})
+
+  const setField =(field, value)=>{
+    setForm({
+      ...form,
+      [field]: value
+    })
+    if(!!errors[field])
+    setErrors({
+      ...errors,
+      [field]: null
+    })
+  }
+  const validateForm=()=>{
+    const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+const{email, password}= form;
+const newErrors={}
+
+if(!email || email=== ''){
+  newErrors.email = 'Please Enter Email Address'
+}
+if( email && regex.test(form.email) === false){
+  newErrors.email ="Invalid Email Address"
+}
+
+if(!password || password === ''){
+  newErrors.password = 'Please Enter Password'
+}
+return newErrors;
+  }
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -100,6 +132,8 @@ const alert = useAlert();
               value={oldPassword}
               type="password"
               fullWidth
+              // error
+              // helperText="Old PassWord Not Valid"
               onChange={(e) => setOldPassword(e.target.value)}
               variant="standard"
             />
@@ -110,6 +144,8 @@ const alert = useAlert();
               value={newPassword}
               type="password"
               fullWidth
+              // error
+              // helperText="Password didn't match"
               onChange={(e) => setNewPassword(e.target.value)}
               variant="standard"
             />
@@ -120,6 +156,8 @@ const alert = useAlert();
               value={confirmPassword}
               type="password"
               fullWidth
+              // error
+              // helperText="Password didn't match"
               onChange={(e) => setConfirmPassword(e.target.value)}
               variant="standard"
             />

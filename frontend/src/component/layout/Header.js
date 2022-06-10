@@ -135,19 +135,9 @@ export default function Header() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              {isAuthenticated ? (
-                <div>
-                  <MenuItem onClick={handleProfile}>
-                    <strong>Profile</strong>
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>
-                    <strong>Logout</strong>
-                  </MenuItem>
-                </div>
-              ) : (
-                <div>
+              {!isAuthenticated ? (
+                  <div>
                   <MenuItem >
-                    {" "}
                     <div>
                       <Login />
                     </div>
@@ -156,6 +146,16 @@ export default function Header() {
                     <Register />
                   </MenuItem>
                 </div>
+              ) : (
+                <div>
+                <MenuItem onClick={handleProfile}>
+                  <strong>Profile</strong>
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  <strong>Logout</strong>
+                </MenuItem>
+              </div>
+           
               )}
             </Menu>
           </div>
