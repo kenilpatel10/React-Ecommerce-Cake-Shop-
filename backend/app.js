@@ -2,7 +2,10 @@ const express = require("express")
 const cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
+// const app= require("./app")
 const dotenv =require("dotenv")
+const connectDatabase =require ("./config/database")
+const cloudinary = require("cloudinary")
 
 const app = express();
 app.use(express.json({ limit: "5mb" })); 
@@ -11,9 +14,21 @@ app.use(cookieParser())
 app.use(fileUpload())
 
 // config 
-dotenv.config({path: "backend/config/config.env"})
+dotenv.config({path: "config/config.env"})
 
+//connect database
 
+connectDatabase();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+api_key: process.env.CLOUDINARY_API_KEY,
+api_secret: process.env.CLOUDINARY_API_SECRET,
+
+})
+app.listen(4000, ()=>{
+    console.log(`Serrver is running on http://localhost:${process.env.PORT}`);
+})
 
 //route inmports
 const product =require("./routes/productRoute")
